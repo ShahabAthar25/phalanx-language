@@ -4,7 +4,7 @@ from phalanx_language.parser.ast import (ASTNode, BinaryOpNode,
                                          IntegerLiteralNode, LiteralNode)
 from phalanx_language.parser.parser import Parser
 
-source = "1.5 - 1"
+source = "17%3"
 lexer = Lexer(source)
 
 tokens = lexer.tokenize()
@@ -16,4 +16,5 @@ ast_list = parser.parse()
 interpreter = Interpreter()
 val = interpreter.interpret(ast_list)
 
-print(val)
+if val is not None:
+    print(val)

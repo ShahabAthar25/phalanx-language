@@ -33,3 +33,4 @@ def register_all_rules(parser: Parser):
     infix(TokenTypes.MINUS, parse_binary_op, BindingPower.SUM)
     infix(TokenTypes.MULT, parse_binary_op, BindingPower.PRODUCT)
     infix(TokenTypes.DIV, parse_binary_op, BindingPower.PRODUCT)
+    infix(TokenTypes.MODULO, parse_binary_op, BindingPower.PRODUCT)
