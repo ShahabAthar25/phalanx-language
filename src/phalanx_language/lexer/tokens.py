@@ -3,7 +3,7 @@ from enum import StrEnum, auto
 from typing import Any, Optional
 
 
-class TokenTypes:
+class TokenTypes(StrEnum):
     EOF = auto()
 
     LPAREN = auto()
@@ -21,19 +21,25 @@ class TokenTypes:
 
 @dataclass
 class Position:
-    start: int
-    end: int
+    start_idx: int
+    end_idx: int
     line: int
-    column: int
+    col: int
 
 
 class Token:
     def __init__(
-        self, token_type: TokenTypes, value: Optional[Any], pos: Position
+        self,
+        token_type: TokenTypes,
+        pos: Position,
+        value: Optional[Any] = None,
     ) -> None:
         self.type = token_type
         self.value = value
         self.pos = pos
 
     def __repr__(self) -> str:
-        return f"{self.type}:{self.value}"
+        if self.value:
+            return f"{self.type}:{self.value}"
+
+        return f"{self.type}"
