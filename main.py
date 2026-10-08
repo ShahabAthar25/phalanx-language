@@ -1,9 +1,11 @@
 from phalanx_language.lexer.lexer import Lexer
+from phalanx_language.parser.parser import Parser
 
-source = "1234567890 + 1234567890"
+source = "28 + 29 - 93 * 83 / 9"
 lexer = Lexer(source)
 
 tokens = lexer.tokenize()
 
-for token in tokens:
-    print(token)
+parser = Parser(tokens)
+
+parser.parse()
