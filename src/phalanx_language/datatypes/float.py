@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from phalanx_language.datatypes.base import Value
+from phalanx_language.datatypes.factory import register_float_contructor
 from phalanx_language.datatypes.int import Integer
 
 
@@ -77,3 +78,6 @@ class Float(Value):
             return Float(other.value % self.value)
 
         return NotImplemented
+
+
+register_float_contructor(Float)

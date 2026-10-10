@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from phalanx_language.datatypes.base import Value
+from phalanx_language.datatypes.factory import make_float
 
 
 @dataclass(frozen=True, slots=True)
@@ -37,8 +38,11 @@ class Integer(Value):
         return NotImplemented
 
     def __truediv__(self, other: Value) -> Value:
-        # Division returns float and thus to avoid circular imports
-        # div is handled by __rtruediv__ in float datatype
+        # Registry pattern
+        # make_float is used instead of Float to avoid circular importation.
+        if isinstance(other, Integer):
+            return make_float(self.value / other.value)
+
         return NotImplemented
 
     def __mod__(self, other: Value) -> Value:

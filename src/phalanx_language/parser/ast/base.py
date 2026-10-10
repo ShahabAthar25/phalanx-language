@@ -1,5 +1,6 @@
 from abc import ABC
 from dataclasses import dataclass
+from typing import Any
 
 from phalanx_language.lexer.tokens import Token
 
@@ -23,7 +24,7 @@ class LiteralNode(ExpressionNode, ABC):
     token: Token
 
     @property
-    def value(self):
+    def value(self) -> Any:
         """Single inherited property for all literal nodes."""
         return self.token.value
 

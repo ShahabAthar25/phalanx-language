@@ -31,3 +31,28 @@ class Value(ABC):
             return type(self) is type(other) and self.value == other.value
 
         return False
+
+    def __add__(self, other: "Value") -> "Value":
+        raise NotImplementedError(
+            f"Operator '+' not supported for {type(self).__name__}"
+        )
+
+    def __sub__(self, other: "Value") -> "Value":
+        raise NotImplementedError(
+            f"Operator '-' not supported for {type(self).__name__}"
+        )
+
+    def __mul__(self, other: "Value") -> "Value":
+        raise NotImplementedError(
+            f"Operator '*' not supported for {type(self).__name__}"
+        )
+
+    def __truediv__(self, other: "Value") -> "Value":
+        raise NotImplementedError(
+            f"Operator '/' not supported for {type(self).__name__}"
+        )
+
+    def __mod__(self, other: "Value") -> "Value":
+        raise NotImplementedError(
+            f"Operator '%' not supported for {type(self).__name__}"
+        )
