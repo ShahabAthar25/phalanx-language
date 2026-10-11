@@ -30,8 +30,18 @@ def register_all_rules(parser: Parser):
 
     # Infix Functions
     infix(TokenTypes.EOF, parse_binary_op, BindingPower.NONE)
+
+    # Arithmatics
     infix(TokenTypes.PLUS, parse_binary_op, BindingPower.SUM)
     infix(TokenTypes.MINUS, parse_binary_op, BindingPower.SUM)
     infix(TokenTypes.MULT, parse_binary_op, BindingPower.PRODUCT)
     infix(TokenTypes.DIV, parse_binary_op, BindingPower.PRODUCT)
     infix(TokenTypes.MODULO, parse_binary_op, BindingPower.PRODUCT)
+
+    # Conditions
+    infix(TokenTypes.EQ, parse_binary_op, BindingPower.COND)
+    infix(TokenTypes.NEQ, parse_binary_op, BindingPower.COND)
+    infix(TokenTypes.GT, parse_binary_op, BindingPower.COND)
+    infix(TokenTypes.GTE, parse_binary_op, BindingPower.COND)
+    infix(TokenTypes.LT, parse_binary_op, BindingPower.COND)
+    infix(TokenTypes.LTE, parse_binary_op, BindingPower.COND)
