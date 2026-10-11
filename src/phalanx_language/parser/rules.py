@@ -4,6 +4,7 @@ from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.binding_power import BindingPower
 from phalanx_language.parser.infixs.binop import parse_binary_op
 from phalanx_language.parser.prefixs.literals import parse_float, parse_int
+from phalanx_language.parser.prefixs.unary import parse_unary
 from phalanx_language.parser.types import InfixFn, PrefixFn
 
 if TYPE_CHECKING:
@@ -24,8 +25,8 @@ def register_all_rules(parser: Parser):
 
     # Unary
     # To be implemented
-    # prefix(TokenTypes.MINUS, parse_unary)
-    # prefix(TokenTypes.PLUS, parse_unary)
+    prefix(TokenTypes.MINUS, parse_unary)
+    prefix(TokenTypes.PLUS, parse_unary)
 
     # Infix Functions
     infix(TokenTypes.EOF, parse_binary_op, BindingPower.NONE)

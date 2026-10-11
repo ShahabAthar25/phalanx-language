@@ -27,3 +27,12 @@ class FloatLiteralNode(LiteralNode):
 
     def __repr__(self) -> str:
         return super().__repr__()
+
+
+@dataclass(frozen=True)
+class UnaryNode:
+    operator: Token
+    expr: ExpressionNode
+
+    def __repr__(self) -> str:
+        return f"{self.operator.type}({self.expr})"

@@ -63,6 +63,9 @@ class Parser:
         # Parse the expr
         left = prefix_func(self)
 
+        # advance is called by the prefix function and current toke now is
+        # a infix operator
+
         while min_bp < self.bp():
             infix_func = self.infix_funcs.get(self.current_tok.type, None)
             if not infix_func:
