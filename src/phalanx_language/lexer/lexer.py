@@ -95,17 +95,22 @@ class Lexer:
                     )
                     self.advance()
 
+                case ":":
+                    yield self.make_compount_token(
+                        TokenTypes.TYPE_ASCRIPTION, TokenTypes.COLON, ":"
+                    )
+
                 case "=":
-                    yield self.make_conditionals(TokenTypes.EQ, TokenTypes.ASSIGN)
+                    yield self.make_compount_token(TokenTypes.EQ, TokenTypes.ASSIGN)
 
                 case "!":
                     yield self.make_neq()
 
                 case ">":
-                    yield self.make_conditionals(TokenTypes.GTE, TokenTypes.GT)
+                    yield self.make_compount_token(TokenTypes.GTE, TokenTypes.GT)
 
                 case "<":
-                    yield self.make_conditionals(TokenTypes.LTE, TokenTypes.LT)
+                    yield self.make_compount_token(TokenTypes.LTE, TokenTypes.LT)
 
                 case char if char in DIGITS:
                     yield self.make_number()
@@ -122,13 +127,15 @@ class Lexer:
             TokenTypes.EOF, Position(self.idx, self.idx, self.line, self.col_idx)
         )
 
-    def make_conditionals(self, tok_type_1: TokenTypes, tok_type_2: TokenTypes):
+    def make_compount_token(
+        self, tok_type_1: TokenTypes, tok_type_2: TokenTypes, next_char: str = "="
+    ):
         start_idx = self.idx
         start_col = self.col_idx
 
         self.advance()
 
-        if self.current_char == "=":
+        if self.current_char == next_char:
             tok_type = tok_type_1
             self.advance()
         else:

@@ -36,11 +36,25 @@ class TokenTypes(StrEnum):
     OR = auto()
     AND = auto()
 
+    # Variables
+    LET = auto()
+
+    # Types
+    TYPE_ASCRIPTION = auto()
+
     # Identifiers
     IDENTIFIER = auto()
 
+    # Maps
+    COLON = auto()
 
-KEYWORDS = {"not": TokenTypes.NOT, "or": TokenTypes.OR, "and": TokenTypes.AND}
+
+KEYWORDS = {
+    "not": TokenTypes.NOT,
+    "or": TokenTypes.OR,
+    "and": TokenTypes.AND,
+    "let": TokenTypes.LET,
+}
 
 
 @dataclass
