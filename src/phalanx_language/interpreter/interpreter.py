@@ -7,7 +7,7 @@ from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
 from phalanx_language.parser.ast.base import ASTNode
 from phalanx_language.parser.ast.prefix import UnaryNode
 
-from . import arithmatic, logicals, unary
+from .evaluators import arithmatic, logicals, unary
 
 
 class Interpreter:
