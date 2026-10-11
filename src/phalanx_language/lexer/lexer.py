@@ -46,6 +46,20 @@ class Lexer:
                     # might need it for making language multiline
                     self.advance()
 
+                case "(":
+                    yield Token(
+                        TokenTypes.LPAREN,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
+
+                case ")":
+                    yield Token(
+                        TokenTypes.RPAREN,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
+
                 case "+":
                     yield Token(
                         TokenTypes.PLUS,
