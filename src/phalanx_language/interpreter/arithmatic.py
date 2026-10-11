@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from phalanx_language.interpreter.interpreter import Interpreter
 
 
-def eval_binary(interpreter: Interpreter, expr: BinaryOpNode) -> Value:
+def evaluate(interpreter: Interpreter, expr: BinaryOpNode) -> Value:
     left = interpreter.evaluate(expr.left)
     right = interpreter.evaluate(expr.right)
 

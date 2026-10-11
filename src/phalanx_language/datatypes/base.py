@@ -32,6 +32,8 @@ class Value(ABC):
 
         return False
 
+    # Arithmatic Oprations
+
     def __add__(self, other: "Value") -> "Value":
         raise NotImplementedError(
             f"Operator '+' not supported for {type(self).__name__}"

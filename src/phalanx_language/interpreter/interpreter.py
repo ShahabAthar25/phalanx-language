@@ -1,6 +1,7 @@
 from typing import List, Sequence
 
 from phalanx_language.datatypes import Float, Integer, Value
+from phalanx_language.interpreter import logicals
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
                                          IntegerLiteralNode)
@@ -33,4 +34,26 @@ class Interpreter:
 
             # Binary Operation
             case BinaryOpNode() as expr:
-                return arithmatic.eval_binary(self, expr)
+                match expr.operator.type:
+                    case (
+                        TokenTypes.PLUS
+                        | TokenTypes.MINUS
+                        | TokenTypes.MULT
+                        | TokenTypes.DIV
+                    ):
+                        return arithmatic.evaluate(self, expr)
+
+                    case (
+                        TokenTypes.EQ
+                        | TokenTypes.NEQ
+                        | TokenTypes.GT
+                        | TokenTypes.GTE
+                        | TokenTypes.LT
+                        | TokenTypes.LTE
+                    ):
+                        return logicals.evaluate(self, expr)
+
+                    case _:
+                        raise RuntimeError(
+                            f"Unknown binary operator: {expr.operator.type}"
+                        )
