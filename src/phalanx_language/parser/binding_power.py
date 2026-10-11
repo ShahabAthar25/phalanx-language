@@ -6,7 +6,9 @@ from phalanx_language.lexer.tokens import Token, TokenTypes
 class BindingPower(IntEnum):
     NONE = 0
     ASSIGN = 1  # =
-    COND = 2  # ==, !=, <=, <, >=, >
-    SUM = 3  # +, -
-    PRODUCT = 4  # *, /, %
-    PREFIX = 5  # -x, !x
+    LOGICAL_OR = 2
+    LOGICAL_AND = 3
+    COMPARISON = 4  # ==, !=, <=, <, >=, >
+    SUM = 5  # +, -
+    PRODUCT = 6  # *, /, %
+    PREFIX = 7  # -x

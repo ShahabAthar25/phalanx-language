@@ -30,7 +30,7 @@ class FloatLiteralNode(LiteralNode):
 
 
 @dataclass(frozen=True)
-class UnaryNode:
+class UnaryNode(ExpressionNode):
     operator: Token
     expr: ExpressionNode
 

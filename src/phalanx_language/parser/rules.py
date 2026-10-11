@@ -19,16 +19,21 @@ def register_all_rules(parser: Parser):
         parser.infix_funcs[tok_type] = func
         parser.binding_powers[tok_type] = bp
 
+    # Prefix Functions
+
     # Literals
     prefix(TokenTypes.INT, parse_int)
     prefix(TokenTypes.FLOAT, parse_float)
 
     # Unary
-    # To be implemented
     prefix(TokenTypes.MINUS, parse_unary)
     prefix(TokenTypes.PLUS, parse_unary)
 
+    # Logical
+    prefix(TokenTypes.NOT, parse_unary)
+
     # Infix Functions
+
     infix(TokenTypes.EOF, parse_binary_op, BindingPower.NONE)
 
     # Arithmatics
@@ -38,10 +43,14 @@ def register_all_rules(parser: Parser):
     infix(TokenTypes.DIV, parse_binary_op, BindingPower.PRODUCT)
     infix(TokenTypes.MODULO, parse_binary_op, BindingPower.PRODUCT)
 
-    # Conditions
-    infix(TokenTypes.EQ, parse_binary_op, BindingPower.COND)
-    infix(TokenTypes.NEQ, parse_binary_op, BindingPower.COND)
-    infix(TokenTypes.GT, parse_binary_op, BindingPower.COND)
-    infix(TokenTypes.GTE, parse_binary_op, BindingPower.COND)
-    infix(TokenTypes.LT, parse_binary_op, BindingPower.COND)
-    infix(TokenTypes.LTE, parse_binary_op, BindingPower.COND)
+    # Comparisions
+    infix(TokenTypes.EQ, parse_binary_op, BindingPower.COMPARISON)
+    infix(TokenTypes.NEQ, parse_binary_op, BindingPower.COMPARISON)
+    infix(TokenTypes.GT, parse_binary_op, BindingPower.COMPARISON)
+    infix(TokenTypes.GTE, parse_binary_op, BindingPower.COMPARISON)
+    infix(TokenTypes.LT, parse_binary_op, BindingPower.COMPARISON)
+    infix(TokenTypes.LTE, parse_binary_op, BindingPower.COMPARISON)
+
+    # Logical
+    infix(TokenTypes.OR, parse_binary_op, BindingPower.LOGICAL_OR)
+    infix(TokenTypes.AND, parse_binary_op, BindingPower.LOGICAL_AND)
