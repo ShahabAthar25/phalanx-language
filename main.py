@@ -13,12 +13,13 @@ def run(source: str) -> None:
     parser = Parser(tokens)
 
     ast_list = parser.parse()
+    print(ast_list)
 
-    interpreter = Interpreter()
-    val = interpreter.interpret(ast_list)
-
-    if val is not None:
-        print(val)
+    # interpreter = Interpreter()
+    # val = interpreter.interpret(ast_list)
+    #
+    # if val is not None:
+    #     print(val)
 
 
 # source = "6 * -6 <= 5 * 6 or 0"
