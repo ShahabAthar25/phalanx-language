@@ -18,6 +18,14 @@ class TokenTypes(StrEnum):
     DIV = auto()
     MODULO = auto()
 
+    ASSIGN = auto()  # '='
+    EQ = auto()  # '=='
+    NEQ = auto()
+    GT = auto()
+    GTE = auto()
+    LT = auto()
+    LTE = auto()
+
 
 @dataclass
 class Position:

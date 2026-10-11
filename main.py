@@ -4,17 +4,18 @@ from phalanx_language.parser.ast import (ASTNode, BinaryOpNode,
                                          IntegerLiteralNode, LiteralNode)
 from phalanx_language.parser.parser import Parser
 
-source = "-1 * 5"
+source = "== = < <= > >= !="
 lexer = Lexer(source)
 
 tokens = lexer.tokenize()
+print(list(tokens))
 
-parser = Parser(tokens)
+# parser = Parser(tokens)
+#
+# ast_list = parser.parse()
 
-ast_list = parser.parse()
-
-interpreter = Interpreter()
-val = interpreter.interpret(ast_list)
-
-if val is not None:
-    print(val)
+# interpreter = Interpreter()
+# val = interpreter.interpret(ast_list)
+#
+# if val is not None:
+#     print(val)

@@ -37,52 +37,69 @@ class Lexer:
 
     def tokenize(self) -> Generator[Token]:
         while self.current_char:
+            match self.current_char:
+                case " " | "\t":
+                    self.advance()
 
-            if self.current_char in " \t":
-                self.advance()
+                case "\n":
+                    # Moved logic to advance as is more useful but still kept if statement as
+                    # might need it for making language multiline
+                    self.advance()
 
-            elif self.current_char == "\n":
-                # Moved logic to advance as is more useful but still kept if statement as
-                # might need it for making language multiline
-                self.advance()
+                case "+":
+                    yield Token(
+                        TokenTypes.PLUS,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
 
-            elif self.current_char == "+":
-                yield Token(
-                    TokenTypes.PLUS,
-                    Position(self.idx, self.idx + 1, self.line, self.col_idx),
-                )
-                self.advance()
+                case "-":
+                    yield Token(
+                        TokenTypes.MINUS,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
 
-            elif self.current_char == "-":
-                yield Token(
-                    TokenTypes.MINUS,
-                    Position(self.idx, self.idx + 1, self.line, self.col_idx),
-                )
-                self.advance()
+                case "*":
+                    yield Token(
+                        TokenTypes.MULT,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
 
-            elif self.current_char == "*":
-                yield Token(
-                    TokenTypes.MULT,
-                    Position(self.idx, self.idx + 1, self.line, self.col_idx),
-                )
-                self.advance()
+                case "/":
+                    yield Token(
+                        TokenTypes.DIV,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
 
-            elif self.current_char == "/":
-                yield Token(
-                    TokenTypes.DIV,
-                    Position(self.idx, self.idx + 1, self.line, self.col_idx),
-                )
-                self.advance()
+                case "%":
+                    yield Token(
+                        TokenTypes.MODULO,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
 
-            elif self.current_char == "%":
-                yield Token(
-                    TokenTypes.MODULO,
-                    Position(self.idx, self.idx + 1, self.line, self.col_idx),
-                )
-                self.advance()
+                case "=":
+                    yield self.make_conditionals(TokenTypes.EQ, TokenTypes.ASSIGN)
 
-            elif self.current_char in DIGITS:
-                yield self.make_number()
+                case "!":
+                    yield self.make_neq()
+
+                case ">":
+                    yield self.make_conditionals(TokenTypes.GTE, TokenTypes.GT)
+
+                case "<":
+                    yield self.make_conditionals(TokenTypes.LTE, TokenTypes.LT)
+
+                case char if char in DIGITS:
+                    yield self.make_number()
+
+                case _:
+                    raise SyntaxError(
+                        f"Unexpected character: '{self.current_char}' at line {self.line}, col {self.col_idx}"
+                    )
 
         yield Token(
             TokenTypes.EOF, Position(self.idx, self.idx, self.line, self.col_idx)
@@ -114,4 +131,33 @@ class Lexer:
             token_type,
             value=val,
             pos=Position(start_idx, self.idx, self.line, start_col),
+        )
+
+    def make_conditionals(self, tok_type_1: TokenTypes, tok_type_2: TokenTypes):
+        start_idx = self.idx
+        start_col = self.col_idx
+
+        self.advance()
+
+        if self.current_char == "=":
+            tok_type = tok_type_1
+            self.advance()
+        else:
+            tok_type = tok_type_2
+
+        return Token(tok_type, pos=Position(start_idx, self.idx, self.line, start_col))
+
+    def make_neq(self):
+        start_idx = self.idx
+        start_col = self.col_idx
+
+        self.advance()
+
+        if self.current_char != "=":
+            raise SyntaxError("Expected '=' after '!'")
+
+        self.advance()
+
+        return Token(
+            TokenTypes.NEQ, pos=Position(start_idx, self.idx, self.line, start_col)
         )
