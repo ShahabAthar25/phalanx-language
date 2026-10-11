@@ -4,7 +4,7 @@ from phalanx_language.parser.ast import (ASTNode, BinaryOpNode,
                                          IntegerLiteralNode, LiteralNode)
 from phalanx_language.parser.parser import Parser
 
-source = "not 6 * -6 <= 5 * 6"
+source = "6 * -6 <= 5 * 6 or 0"
 lexer = Lexer(source)
 
 tokens = lexer.tokenize()

@@ -48,7 +48,10 @@ class Interpreter:
                         | TokenTypes.LT
                         | TokenTypes.LTE
                     ):
-                        return logicals.evaluate(self, expr)
+                        return logicals.evaluate_comparison(self, expr)
+
+                    case TokenTypes.OR | TokenTypes.AND:
+                        return logicals.evaluate_logical(self, expr)
 
                     case _:
                         raise RuntimeError(
