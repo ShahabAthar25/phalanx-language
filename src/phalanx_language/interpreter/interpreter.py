@@ -1,14 +1,13 @@
 from typing import List, Sequence
 
 from phalanx_language.datatypes import Float, Integer, Value
-from phalanx_language.interpreter import logicals
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
                                          IntegerLiteralNode)
 from phalanx_language.parser.ast.base import ASTNode
 from phalanx_language.parser.ast.prefix import UnaryNode
 
-from . import arithmatic
+from . import arithmatic, logicals
 
 
 class Interpreter:
@@ -57,3 +56,5 @@ class Interpreter:
                         raise RuntimeError(
                             f"Unknown binary operator: {expr.operator.type}"
                         )
+            case _:
+                raise RuntimeError(f"Exexpected ast node: {node}")

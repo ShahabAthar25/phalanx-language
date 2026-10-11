@@ -1,6 +1,6 @@
 from typing import Generator, Iterable
 
-from phalanx_language.lexer.tokens import Position, Token, TokenTypes
+from phalanx_language.lexer.tokens import KEYWORDS, Position, Token, TokenTypes
 
 DIGITS = "1234567890"
 
@@ -96,6 +96,9 @@ class Lexer:
                 case char if char in DIGITS:
                     yield self.make_number()
 
+                case char if char.isalpha():
+                    yield self.make_identifier_or_keyword()
+
                 case _:
                     raise SyntaxError(
                         f"Unexpected character: '{self.current_char}' at line {self.line}, col {self.col_idx}"
@@ -103,6 +106,35 @@ class Lexer:
 
         yield Token(
             TokenTypes.EOF, Position(self.idx, self.idx, self.line, self.col_idx)
+        )
+
+    def make_conditionals(self, tok_type_1: TokenTypes, tok_type_2: TokenTypes):
+        start_idx = self.idx
+        start_col = self.col_idx
+
+        self.advance()
+
+        if self.current_char == "=":
+            tok_type = tok_type_1
+            self.advance()
+        else:
+            tok_type = tok_type_2
+
+        return Token(tok_type, pos=Position(start_idx, self.idx, self.line, start_col))
+
+    def make_neq(self):
+        start_idx = self.idx
+        start_col = self.col_idx
+
+        self.advance()
+
+        if self.current_char != "=":
+            raise SyntaxError("Expected '=' after '!'")
+
+        self.advance()
+
+        return Token(
+            TokenTypes.NEQ, pos=Position(start_idx, self.idx, self.line, start_col)
         )
 
     def make_number(self) -> Token:
@@ -133,31 +165,21 @@ class Lexer:
             pos=Position(start_idx, self.idx, self.line, start_col),
         )
 
-    def make_conditionals(self, tok_type_1: TokenTypes, tok_type_2: TokenTypes):
+    def make_identifier_or_keyword(self):
         start_idx = self.idx
         start_col = self.col_idx
+        value = ""
 
-        self.advance()
-
-        if self.current_char == "=":
-            tok_type = tok_type_1
+        while self.current_char and (
+            self.current_char.isalnum() or self.current_char == "_"
+        ):
+            value += self.current_char
             self.advance()
-        else:
-            tok_type = tok_type_2
 
-        return Token(tok_type, pos=Position(start_idx, self.idx, self.line, start_col))
-
-    def make_neq(self):
-        start_idx = self.idx
-        start_col = self.col_idx
-
-        self.advance()
-
-        if self.current_char != "=":
-            raise SyntaxError("Expected '=' after '!'")
-
-        self.advance()
+        tok_type = KEYWORDS.get(value, TokenTypes.IDENTIFIER)
 
         return Token(
-            TokenTypes.NEQ, pos=Position(start_idx, self.idx, self.line, start_col)
+            tok_type,
+            pos=Position(start_idx, self.idx, self.line, start_col),
+            value=value if tok_type == TokenTypes.IDENTIFIER else None,
         )

@@ -9,22 +9,38 @@ class TokenTypes(StrEnum):
     LPAREN = auto()
     RPAREN = auto()
 
+    # Literals
     INT = auto()
     FLOAT = auto()
 
+    # Arithmatic
     PLUS = auto()
     MINUS = auto()
     MULT = auto()
     DIV = auto()
     MODULO = auto()
 
+    # Assignments
     ASSIGN = auto()  # '='
+
+    # Logical
     EQ = auto()  # '=='
     NEQ = auto()
     GT = auto()
     GTE = auto()
     LT = auto()
     LTE = auto()
+
+    # Conditions
+    NOT = auto()
+    OR = auto()
+    AND = auto()
+
+    # Identifiers
+    IDENTIFIER = auto()
+
+
+KEYWORDS = {"not": TokenTypes.NOT, "or": TokenTypes.OR, "and": TokenTypes.AND}
 
 
 @dataclass
@@ -35,19 +51,14 @@ class Position:
     col: int
 
 
+@dataclass(frozen=True)
 class Token:
-    def __init__(
-        self,
-        token_type: TokenTypes,
-        pos: Position,
-        value: Optional[Any] = None,
-    ) -> None:
-        self.type = token_type
-        self.value = value
-        self.pos = pos
+    type: TokenTypes
+    pos: Position
+    value: Optional[Any] = None
 
     def __repr__(self) -> str:
-        if self.value:
+        if self.value is not None:
             return f"{self.type}:{self.value}"
 
         return f"{self.type}"
