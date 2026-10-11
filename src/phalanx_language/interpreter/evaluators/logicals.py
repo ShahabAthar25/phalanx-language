@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
 from phalanx_language.datatypes.bool import Boolean
+from phalanx_language.interpreter.environment import Enviroment
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast.infix import BinaryOpNode
 
@@ -8,9 +9,9 @@ if TYPE_CHECKING:
     from phalanx_language.interpreter.interpreter import Interpreter
 
 
-def evaluate_comparison(interpreter: Interpreter, node: BinaryOpNode):
-    left = interpreter.evaluate(node.left)
-    right = interpreter.evaluate(node.right)
+def evaluate_comparison(interpreter: Interpreter, node: BinaryOpNode, env):
+    left = interpreter.evaluate(node.left, env)
+    right = interpreter.evaluate(node.right, env)
 
     match node.operator.type:
         case TokenTypes.EQ:
@@ -35,9 +36,9 @@ def evaluate_comparison(interpreter: Interpreter, node: BinaryOpNode):
             raise RuntimeError(f"Unexpected logical operator: {node.operator}")
 
 
-def evaluate_logical(interpreter: Interpreter, node: BinaryOpNode):
-    left = interpreter.evaluate(node.left)
-    right = interpreter.evaluate(node.right)
+def evaluate_logical(interpreter: Interpreter, node: BinaryOpNode, env: Enviroment):
+    left = interpreter.evaluate(node.left, env)
+    right = interpreter.evaluate(node.right, env)
 
     match node.operator.type:
         case TokenTypes.OR:

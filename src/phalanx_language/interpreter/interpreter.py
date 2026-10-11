@@ -1,6 +1,7 @@
 from typing import List, Sequence
 
 from phalanx_language.datatypes import Float, Integer, Value
+from phalanx_language.interpreter.environment import Enviroment
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
                                          IntegerLiteralNode)
@@ -13,13 +14,14 @@ from .evaluators import arithmatic, logicals, unary
 class Interpreter:
     def interpret(self, ast_list: Sequence[ASTNode]) -> Value | None:
         last_evaluated_value = None
+        env = Enviroment()
 
         for stmt in ast_list:
-            last_evaluated_value = self.evaluate(stmt)
+            last_evaluated_value = self.evaluate(stmt, env)
 
         return last_evaluated_value
 
-    def evaluate(self, node: ASTNode) -> Value:
+    def evaluate(self, node: ASTNode, env: Enviroment) -> Value:
         match node:
             # Literals
             case IntegerLiteralNode(value=val):
@@ -38,7 +40,7 @@ class Interpreter:
                         | TokenTypes.MULT
                         | TokenTypes.DIV
                     ):
-                        return arithmatic.evaluate(self, expr)
+                        return arithmatic.evaluate(self, expr, env)
 
                     case (
                         TokenTypes.EQ
@@ -48,10 +50,10 @@ class Interpreter:
                         | TokenTypes.LT
                         | TokenTypes.LTE
                     ):
-                        return logicals.evaluate_comparison(self, expr)
+                        return logicals.evaluate_comparison(self, expr, env)
 
                     case TokenTypes.OR | TokenTypes.AND:
-                        return logicals.evaluate_logical(self, expr)
+                        return logicals.evaluate_logical(self, expr, env)
 
                     case _:
                         raise RuntimeError(
