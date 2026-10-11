@@ -8,11 +8,11 @@ if TYPE_CHECKING:
     from phalanx_language.interpreter.interpreter import Interpreter
 
 
-def evaluate(interpreter: Interpreter, expr: BinaryOpNode):
-    left = interpreter.evaluate(expr.left)
-    right = interpreter.evaluate(expr.right)
+def evaluate(interpreter: Interpreter, node: BinaryOpNode):
+    left = interpreter.evaluate(node.left)
+    right = interpreter.evaluate(node.right)
 
-    match expr.operator.type:
+    match node.operator.type:
         case TokenTypes.EQ:
             return Boolean(left.value == right.value)
 
@@ -32,4 +32,4 @@ def evaluate(interpreter: Interpreter, expr: BinaryOpNode):
             return Boolean(left.value <= right.value)
 
         case _:
-            raise RuntimeError(f"Unexpected logical operator: {expr.operator}")
+            raise RuntimeError(f"Unexpected logical operator: {node.operator}")

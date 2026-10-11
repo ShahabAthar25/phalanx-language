@@ -18,4 +18,5 @@ def parse_unary(parser: Parser) -> ExpressionNode:
         parser.binding_powers.get(operator.type, BindingPower.ASSIGN)
     )
 
-    return UnaryNode(operator, expr)
+    node = UnaryNode(operator, expr)
+    return node

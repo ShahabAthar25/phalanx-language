@@ -15,6 +15,9 @@ class Value(ABC):
         """Determines truthiness in if/while conditions."""
         pass
 
+    def negate(self) -> bool:
+        return not self.is_truthy()
+
     @abstractmethod
     def type_name(self) -> str:
         """Human-readable type string for runtime errors (e.g. 'integer', 'string')."""

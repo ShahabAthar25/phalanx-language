@@ -8,11 +8,11 @@ if TYPE_CHECKING:
     from phalanx_language.interpreter.interpreter import Interpreter
 
 
-def evaluate(interpreter: Interpreter, expr: BinaryOpNode) -> Value:
-    left = interpreter.evaluate(expr.left)
-    right = interpreter.evaluate(expr.right)
+def evaluate(interpreter: Interpreter, node: BinaryOpNode) -> Value:
+    left = interpreter.evaluate(node.left)
+    right = interpreter.evaluate(node.right)
 
-    match expr.operator.type:
+    match node.operator.type:
         case TokenTypes.PLUS:
             return left + right
 

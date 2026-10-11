@@ -7,7 +7,7 @@ from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
 from phalanx_language.parser.ast.base import ASTNode
 from phalanx_language.parser.ast.prefix import UnaryNode
 
-from . import arithmatic, logicals
+from . import arithmatic, logicals, unary
 
 
 class Interpreter:
@@ -26,10 +26,8 @@ class Interpreter:
                 return Integer(value=val)
             case FloatLiteralNode(value=val):
                 return Float(value=val)
-            case UnaryNode(operator, expr):
-                sign = Integer(-1) if operator.type == TokenTypes.MINUS else Integer(1)
-                expr = self.evaluate(expr)
-                return sign * expr
+            case UnaryNode() as expr:
+                return unary.evaluate(self, expr)
 
             # Binary Operation
             case BinaryOpNode() as expr:
