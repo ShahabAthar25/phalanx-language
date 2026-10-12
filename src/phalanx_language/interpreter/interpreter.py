@@ -4,9 +4,11 @@ from phalanx_language.datatypes import Float, Integer, Value
 from phalanx_language.interpreter.environment import Enviroment
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
-                                         IntegerLiteralNode)
+                                         IntegerLiteralNode,
+                                         VariableDeclarationNode)
 from phalanx_language.parser.ast.base import ASTNode
 from phalanx_language.parser.ast.prefix import UnaryNode
+from phalanx_language.parser.ast.variables import VariableAccessNode
 
 from .evaluators import arithmatic, logicals, unary
 
@@ -29,7 +31,7 @@ class Interpreter:
             case FloatLiteralNode(value=val):
                 return Float(value=val)
             case UnaryNode() as expr:
-                return unary.evaluate(self, expr)
+                return unary.evaluate(self, expr, env)
 
             # Binary Operation
             case BinaryOpNode() as expr:
@@ -59,5 +61,14 @@ class Interpreter:
                         raise RuntimeError(
                             f"Unknown binary operator: {expr.operator.type}"
                         )
+            # Variables
+            case VariableDeclarationNode(identifier, var_type, expr):
+                env.define(identifier.value, self.evaluate(expr, env), var_type)
+                return Integer(1)
+
+            case VariableAccessNode(identifier):
+                var = env.retrieve(identifier.value)
+                return var
+
             case _:
                 raise RuntimeError(f"Exexpected ast node: {node}")
