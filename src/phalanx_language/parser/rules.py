@@ -3,7 +3,9 @@ from typing import TYPE_CHECKING
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.binding_power import BindingPower
 from phalanx_language.parser.infixs.binop import parse_binary_op
-from phalanx_language.parser.prefixs.grouping import parse_grouping
+from phalanx_language.parser.prefixs.control_flow import parse_if_stmt
+from phalanx_language.parser.prefixs.grouping import (parse_grouping_curly,
+                                                      parse_grouping_paren)
 from phalanx_language.parser.prefixs.literals import parse_float, parse_int
 from phalanx_language.parser.prefixs.unary import parse_unary
 from phalanx_language.parser.prefixs.variables import (
@@ -23,7 +25,8 @@ def register_all_rules(parser: Parser):
         parser.binding_powers[tok_type] = bp
 
     # Prefix Functions
-    prefix(TokenTypes.LPAREN, parse_grouping)
+    prefix(TokenTypes.LPAREN, parse_grouping_paren)
+    prefix(TokenTypes.LCURLY, parse_grouping_curly)
 
     # Literals
     prefix(TokenTypes.INT, parse_int)
@@ -39,6 +42,9 @@ def register_all_rules(parser: Parser):
 
     # Logical
     prefix(TokenTypes.NOT, parse_unary)
+
+    # Control Floww
+    prefix(TokenTypes.IF, parse_if_stmt)
 
     # Infix Functions
 

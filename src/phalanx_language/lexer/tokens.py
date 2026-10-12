@@ -9,6 +9,9 @@ class TokenTypes(StrEnum):
     LPAREN = auto()
     RPAREN = auto()
 
+    LCURLY = auto()
+    RCURLY = auto()
+
     # Literals
     INT = auto()
     FLOAT = auto()
@@ -42,6 +45,9 @@ class TokenTypes(StrEnum):
     # Types
     TYPE_ASCRIPTION = auto()
 
+    # Control Flow
+    IF = auto()
+
     # Identifiers
     IDENTIFIER = auto()
 
@@ -54,6 +60,7 @@ KEYWORDS = {
     "or": TokenTypes.OR,
     "and": TokenTypes.AND,
     "let": TokenTypes.LET,
+    "if": TokenTypes.IF,
 }
 
 

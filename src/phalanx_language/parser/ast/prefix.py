@@ -36,3 +36,10 @@ class UnaryNode(ExpressionNode):
 
     def __repr__(self) -> str:
         return f"{self.operator.type}({self.expr})"
+
+
+@dataclass(frozen=True)
+class NullNode(ExpressionNode):
+
+    def __repr__(self) -> str:
+        return "Null"

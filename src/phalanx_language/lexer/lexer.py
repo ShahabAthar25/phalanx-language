@@ -60,6 +60,20 @@ class Lexer:
                     )
                     self.advance()
 
+                case "{":
+                    yield Token(
+                        TokenTypes.LCURLY,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
+
+                case "}":
+                    yield Token(
+                        TokenTypes.RCURLY,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
+
                 case "+":
                     yield Token(
                         TokenTypes.PLUS,
