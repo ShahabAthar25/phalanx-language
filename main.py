@@ -14,22 +14,25 @@ def run(source: str) -> None:
     parser = Parser(tokens)
 
     ast_list = parser.parse()
-    print(ast_list)
 
-    # interpreter = Interpreter()
-    #
-    # val = interpreter.interpret(ast_list)
-    #
-    # if not isinstance(val, Null):
-    #     print(val)
+    interpreter = Interpreter()
+
+    val = interpreter.interpret(ast_list)
+
+    if not isinstance(val, Null):
+        print(val)
 
 
 source = """
-if true {
-        let a::true = true
+if false {
+    let a::bool = true
+    a
 }
 
-a
+if true {
+    let b::bool = true
+    b
+}
 """
 run(source)
 # while True:

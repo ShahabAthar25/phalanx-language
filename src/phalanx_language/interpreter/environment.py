@@ -17,11 +17,11 @@ TYPE_REGISTRY: Dict[str, type] = {
 
 
 class Enviroment:
-    def __init__(self) -> None:
+    def __init__(self, parent=None) -> None:
         self.values: Dict[str, Value] = {}
         self.types: Dict[str, type] = {}
 
-        self.parent: Optional[Enviroment] = None
+        self.parent: Optional[Enviroment] = parent
 
     def _check_type(self, name: str, value: Value, var_type: str | Type) -> Type:
         actual_type = type(value)

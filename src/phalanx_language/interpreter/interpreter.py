@@ -1,4 +1,4 @@
-from typing import List, Sequence
+from typing import List, Optional, Sequence
 
 from phalanx_language.datatypes import Float, Integer, Value
 from phalanx_language.datatypes.null import Null
@@ -8,18 +8,25 @@ from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
                                          IntegerLiteralNode,
                                          VariableDeclarationNode)
 from phalanx_language.parser.ast.base import ASTNode
+from phalanx_language.parser.ast.control_flow import IfStmtNode
 from phalanx_language.parser.ast.prefix import UnaryNode
 from phalanx_language.parser.ast.variables import VariableAccessNode
 
 from .builtins import register_builtins
-from .evaluators import arithmatic, logicals, unary
+from .evaluators import arithmatic, control_flow, logicals, unary
 
 
 class Interpreter:
-    def interpret(self, ast_list: Sequence[ASTNode]) -> Value | None:
-        last_evaluated_value = None
-        env = Enviroment()
-        register_builtins(env)
+    def interpret(
+        self,
+        ast_list: Sequence[ASTNode],
+        env_parent: Optional[Enviroment] = None,
+        register: bool = True,
+    ) -> Value:
+        last_evaluated_value = Null()
+        env = Enviroment(parent=env_parent)
+        if register:
+            register_builtins(env)
 
         for stmt in ast_list:
             last_evaluated_value = self.evaluate(stmt, env)
@@ -73,6 +80,10 @@ class Interpreter:
             case VariableAccessNode(identifier):
                 var = env.retrieve(identifier.value)
                 return var
+
+            # Control Flow
+            case IfStmtNode() as node:
+                return control_flow.evaluate_if_stmt(self, node, env)
 
             case _:
                 raise RuntimeError(f"Exexpected ast node: {node}")
