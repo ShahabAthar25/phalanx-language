@@ -4,6 +4,7 @@ from phalanx_language.datatypes.base import Value
 from phalanx_language.datatypes.bool import Boolean
 from phalanx_language.datatypes.float import Float
 from phalanx_language.datatypes.int import Integer
+from phalanx_language.datatypes.null import Null
 from phalanx_language.lexer.tokens import Token, TokenTypes
 from phalanx_language.parser.ast.variables import VariableAccessNode
 
@@ -11,6 +12,7 @@ TYPE_REGISTRY: Dict[str, type] = {
     "int": Integer,
     "float": Float,
     "bool": Boolean,
+    "null": Null,
 }
 
 
@@ -21,14 +23,14 @@ class Enviroment:
 
         self.parent: Optional[Enviroment] = None
 
-    def _check_type(self, name: str, value: Value, var_type: Token | Type) -> Type:
+    def _check_type(self, name: str, value: Value, var_type: str | Type) -> Type:
         actual_type = type(value)
 
-        if isinstance(var_type, Token):
-            if var_type.value not in TYPE_REGISTRY:
+        if isinstance(var_type, str):
+            if var_type not in TYPE_REGISTRY:
                 raise TypeError(f"TypeError: Unknown type '{var_type}'")
 
-            expected_type = TYPE_REGISTRY[var_type.value]
+            expected_type = TYPE_REGISTRY[var_type]
 
         elif isinstance(var_type, type):
             expected_type = var_type
@@ -47,7 +49,7 @@ class Enviroment:
 
         return expected_type
 
-    def define(self, name: str, value: Value, var_type: VariableAccessNode) -> None:
+    def define(self, name: str, value: Value, var_type: str) -> None:
         if self.get(name) is not None:
             raise NameError("Variable already defined in local or global scope.")
 

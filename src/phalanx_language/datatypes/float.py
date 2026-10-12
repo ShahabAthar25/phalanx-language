@@ -10,7 +10,7 @@ class Float(Value):
     value: float
 
     def type_name(self) -> str:
-        return "Float"
+        return "float"
 
     def is_truthy(self) -> bool:
         return self.value != 0

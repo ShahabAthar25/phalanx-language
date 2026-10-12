@@ -9,7 +9,7 @@ class Integer(Value):
     value: int
 
     def type_name(self) -> str:
-        return "Interger"
+        return "int"
 
     def is_truthy(self) -> bool:
         return self.value != 0

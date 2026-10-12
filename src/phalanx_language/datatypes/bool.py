@@ -8,7 +8,7 @@ class Boolean(Value):
     value: bool
 
     def type_name(self) -> str:
-        return "Boolean"
+        return "bool"
 
     def is_truthy(self) -> bool:
         return self.value

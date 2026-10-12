@@ -1,3 +1,4 @@
+from phalanx_language.datatypes.null import Null
 from phalanx_language.interpreter.interpreter import Interpreter
 from phalanx_language.lexer.lexer import Lexer
 from phalanx_language.parser.ast import (ASTNode, BinaryOpNode,
@@ -18,12 +19,15 @@ def run(source: str) -> None:
 
     val = interpreter.interpret(ast_list)
 
-    if val is not None:
+    if not isinstance(val, Null):
         print(val)
 
 
 source = """
-let b::float = 10.0
+let a::int = 10
+let b::int = 10
+let c::int = a + b
+c
 """
 run(source)
 # while True:

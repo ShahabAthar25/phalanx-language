@@ -1,6 +1,7 @@
 from typing import List, Sequence
 
 from phalanx_language.datatypes import Float, Integer, Value
+from phalanx_language.datatypes.null import Null
 from phalanx_language.interpreter.environment import Enviroment
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
@@ -10,6 +11,7 @@ from phalanx_language.parser.ast.base import ASTNode
 from phalanx_language.parser.ast.prefix import UnaryNode
 from phalanx_language.parser.ast.variables import VariableAccessNode
 
+from .builtins import register_builtins
 from .evaluators import arithmatic, logicals, unary
 
 
@@ -17,6 +19,7 @@ class Interpreter:
     def interpret(self, ast_list: Sequence[ASTNode]) -> Value | None:
         last_evaluated_value = None
         env = Enviroment()
+        register_builtins(env)
 
         for stmt in ast_list:
             last_evaluated_value = self.evaluate(stmt, env)
@@ -61,10 +64,11 @@ class Interpreter:
                         raise RuntimeError(
                             f"Unknown binary operator: {expr.operator.type}"
                         )
+
             # Variables
             case VariableDeclarationNode(identifier, var_type, expr):
-                env.define(identifier.value, self.evaluate(expr, env), var_type)
-                return Integer(1)
+                env.define(identifier.value, self.evaluate(expr, env), var_type.value)
+                return Null()
 
             case VariableAccessNode(identifier):
                 var = env.retrieve(identifier.value)
