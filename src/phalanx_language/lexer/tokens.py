@@ -12,6 +12,9 @@ class TokenTypes(StrEnum):
     LCURLY = auto()
     RCURLY = auto()
 
+    LBRACKET = auto()
+    RBRACKET = auto()
+
     # Literals
     INT = auto()
     FLOAT = auto()
@@ -53,6 +56,7 @@ class TokenTypes(StrEnum):
 
     # Maps
     COLON = auto()
+    COMMA = auto()
 
 
 KEYWORDS = {

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 from phalanx_language.lexer.tokens import Token
 from phalanx_language.parser.ast.base import ExpressionNode, LiteralNode
@@ -43,3 +44,11 @@ class NullNode(ExpressionNode):
 
     def __repr__(self) -> str:
         return "Null"
+
+
+@dataclass(frozen=True)
+class ListLiteralNode(ExpressionNode):
+    items: List[ExpressionNode]
+
+    def __repr__(self) -> str:
+        return f"{self.items}"

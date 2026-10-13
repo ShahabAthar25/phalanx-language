@@ -15,20 +15,16 @@ def run(source: str) -> None:
 
     ast_list = parser.parse()
 
-    interpreter = Interpreter()
-
-    val = interpreter.interpret(ast_list)
-
-    if not isinstance(val, Null):
-        print(val)
+    # interpreter = Interpreter()
+    #
+    # val = interpreter.interpret(ast_list)
+    #
+    # if not isinstance(val, Null):
+    #     print(val)
 
 
 source = """
-let a::bool = false
-if true {
-    a = true
-}
-a
+[1,2]
 """
 run(source)
 # while True:

@@ -74,6 +74,20 @@ class Lexer:
                     )
                     self.advance()
 
+                case "[":
+                    yield Token(
+                        TokenTypes.LBRACKET,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
+
+                case "]":
+                    yield Token(
+                        TokenTypes.RBRACKET,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
+
                 case "+":
                     yield Token(
                         TokenTypes.PLUS,
@@ -105,6 +119,13 @@ class Lexer:
                 case "%":
                     yield Token(
                         TokenTypes.MODULO,
+                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    )
+                    self.advance()
+
+                case ",":
+                    yield Token(
+                        TokenTypes.COMMA,
                         Position(self.idx, self.idx + 1, self.line, self.col_idx),
                     )
                     self.advance()
