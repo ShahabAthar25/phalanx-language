@@ -15,6 +15,15 @@ class VariableDeclarationNode(ExpressionNode):
 
 
 @dataclass(frozen=True)
+class VariableAssignNode(ExpressionNode):
+    identifier: Token
+    expr: ExpressionNode
+
+    def __repr__(self) -> str:
+        return f"{self.identifier} = {self.expr}"
+
+
+@dataclass(frozen=True)
 class VariableAccessNode(ExpressionNode):
     identifier: Token
 

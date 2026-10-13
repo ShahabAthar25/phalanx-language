@@ -67,9 +67,6 @@ class Enviroment:
             return
 
         if self.parent is not None:
-            var_type = self.types[name]
-            self._check_type(name, value, var_type)
-
             self.parent.assign(name, value)
             return
 

@@ -24,15 +24,11 @@ def run(source: str) -> None:
 
 
 source = """
-if false {
-    let a::bool = true
-    a
-}
-
+let a::bool = false
 if true {
-    let b::bool = true
-    b
+    a = true
 }
+a
 """
 run(source)
 # while True:

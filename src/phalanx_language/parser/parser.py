@@ -1,4 +1,4 @@
-from typing import Dict, Iterator
+from typing import Dict, Iterator, List
 
 from phalanx_language.lexer.tokens import Position, Token, TokenTypes
 from phalanx_language.parser.ast.base import ExpressionNode
@@ -45,8 +45,8 @@ class Parser:
     def bp(self) -> BindingPower:
         return self.binding_powers.get(self.current_tok.type, BindingPower.NONE)
 
-    def parse(self):
-        ast: list[ExpressionNode] = []
+    def parse(self) -> List[ExpressionNode]:
+        ast: List[ExpressionNode] = []
         while self.current_tok.type != TokenTypes.EOF:
             expr = self.parse_expr()
             ast.append(expr)

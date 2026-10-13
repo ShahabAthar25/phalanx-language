@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast.base import ExpressionNode
 from phalanx_language.parser.ast.variables import (VariableAccessNode,
+                                                   VariableAssignNode,
                                                    VariableDeclarationNode)
 
 if TYPE_CHECKING:
@@ -27,6 +28,15 @@ def parse_variable_declaration(parser: Parser) -> ExpressionNode:
 
 def parse_identifier(parser: Parser) -> ExpressionNode:
     tok = parser.current_tok
+
+    # Variable assignment
+    if parser.peek_tok.type == TokenTypes.ASSIGN:
+        parser.advance()  # Advances from identifier to '='
+        parser.advance()  # Advances '=' to start of the expression
+
+        expr = parser.parse_expr()
+
+        return VariableAssignNode(tok, expr)
 
     parser.advance()
 

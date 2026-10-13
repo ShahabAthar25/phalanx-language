@@ -10,7 +10,8 @@ from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
 from phalanx_language.parser.ast.base import ASTNode
 from phalanx_language.parser.ast.control_flow import IfStmtNode
 from phalanx_language.parser.ast.prefix import UnaryNode
-from phalanx_language.parser.ast.variables import VariableAccessNode
+from phalanx_language.parser.ast.variables import (VariableAccessNode,
+                                                   VariableAssignNode)
 
 from .builtins import register_builtins
 from .evaluators import arithmatic, control_flow, logicals, unary
@@ -76,6 +77,11 @@ class Interpreter:
             case VariableDeclarationNode(identifier, var_type, expr):
                 env.define(identifier.value, self.evaluate(expr, env), var_type.value)
                 return Null()
+
+            case VariableAssignNode(identifier, expr):
+                expr_evaluated = self.evaluate(expr, env)
+                env.assign(identifier.value, expr_evaluated)
+                return expr_evaluated
 
             case VariableAccessNode(identifier):
                 var = env.retrieve(identifier.value)
