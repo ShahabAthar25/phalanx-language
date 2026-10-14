@@ -51,6 +51,9 @@ class TokenTypes(StrEnum):
     # Control Flow
     IF = auto()
 
+    # Functions
+    FUNC = auto()
+
     # Identifiers
     IDENTIFIER = auto()
 
@@ -65,6 +68,7 @@ KEYWORDS = {
     "and": TokenTypes.AND,
     "let": TokenTypes.LET,
     "if": TokenTypes.IF,
+    "func": TokenTypes.FUNC,
 }
 
 

@@ -14,6 +14,7 @@ def run(source: str) -> None:
     parser = Parser(tokens)
 
     ast_list = parser.parse()
+    print(ast_list)
 
     # interpreter = Interpreter()
     #
@@ -24,7 +25,11 @@ def run(source: str) -> None:
 
 
 source = """
-[1,2]
+func add(a::int, b::int) {
+    a + b
+}
+
+add(10, 10)
 """
 run(source)
 # while True:

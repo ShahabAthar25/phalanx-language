@@ -1,6 +1,7 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from phalanx_language.lexer.tokens import TokenTypes
+from phalanx_language.parser.ast.base import ExpressionNode
 from phalanx_language.parser.ast.prefix import NullNode
 from phalanx_language.parser.binding_power import BindingPower
 
@@ -22,7 +23,7 @@ def parse_grouping_paren(parser: Parser):
     return expr
 
 
-def parse_grouping_curly(parser: Parser):
+def parse_grouping_curly(parser: Parser) -> List[ExpressionNode] | NullNode:
     parser.advance()
 
     # Empty code block should return nothing

@@ -4,13 +4,15 @@ from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.binding_power import BindingPower
 from phalanx_language.parser.infixs.binop import parse_binary_op
 from phalanx_language.parser.prefixs.control_flow import parse_if_stmt
+from phalanx_language.parser.prefixs.functions import parse_func
 from phalanx_language.parser.prefixs.grouping import (parse_grouping_curly,
                                                       parse_grouping_paren)
+from phalanx_language.parser.prefixs.identifiers import parse_identifier
 from phalanx_language.parser.prefixs.lists import parse_lists
 from phalanx_language.parser.prefixs.literals import parse_float, parse_int
 from phalanx_language.parser.prefixs.unary import parse_unary
-from phalanx_language.parser.prefixs.variables import (
-    parse_identifier, parse_variable_declaration)
+from phalanx_language.parser.prefixs.variables import \
+    parse_variable_declaration
 from phalanx_language.parser.types import InfixFn, PrefixFn
 
 if TYPE_CHECKING:
@@ -41,6 +43,9 @@ def register_all_rules(parser: Parser):
     # Variables
     prefix(TokenTypes.LET, parse_variable_declaration)
     prefix(TokenTypes.IDENTIFIER, parse_identifier)
+
+    # Functions
+    prefix(TokenTypes.FUNC, parse_func)
 
     # Logical
     prefix(TokenTypes.NOT, parse_unary)
