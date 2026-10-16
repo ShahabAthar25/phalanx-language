@@ -14,22 +14,19 @@ def run(source: str) -> None:
     parser = Parser(tokens)
 
     ast_list = parser.parse()
-    print(ast_list)
 
-    # interpreter = Interpreter()
-    #
-    # val = interpreter.interpret(ast_list)
-    #
-    # if not isinstance(val, Null):
-    #     print(val)
+    interpreter = Interpreter()
+
+    val = interpreter.interpret(ast_list)
+
+    if not isinstance(val, Null):
+        print(val)
 
 
 source = """
 func add(a::int, b::int) {
     a + b
 }
-
-add(10, 10)
 """
 run(source)
 # while True:

@@ -1,20 +1,23 @@
 from typing import List, Optional, Sequence
 
 from phalanx_language.datatypes import Float, Integer, Value
+from phalanx_language.datatypes.function import Function
 from phalanx_language.datatypes.null import Null
 from phalanx_language.interpreter.environment import Enviroment
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
                                          IntegerLiteralNode,
                                          VariableDeclarationNode)
-from phalanx_language.parser.ast.base import ASTNode
+from phalanx_language.parser.ast.base import ASTNode, ExpressionNode
 from phalanx_language.parser.ast.control_flow import IfStmtNode
+from phalanx_language.parser.ast.functions import (FunctionCallNode,
+                                                   FunctionDeclerationNode)
 from phalanx_language.parser.ast.prefix import UnaryNode
 from phalanx_language.parser.ast.variables import (VariableAccessNode,
                                                    VariableAssignNode)
 
 from .builtins import register_builtins
-from .evaluators import arithmatic, control_flow, logicals, unary
+from .evaluators import arithmatic, control_flow, functions, logicals, unary
 
 
 class Interpreter:
@@ -86,6 +89,13 @@ class Interpreter:
             case VariableAccessNode(identifier):
                 var = env.retrieve(identifier.value)
                 return var
+
+            # Functions
+            case FunctionDeclerationNode(name, params, code_block):
+                return Function(name.value, params, code_block, env)
+
+            case FunctionCallNode() as node:
+                return functions.evaluate(self, node, env)
 
             # Control Flow
             case IfStmtNode() as node:

@@ -217,7 +217,7 @@ class Lexer:
 
         return Token(
             token_type,
-            value=val,
+            raw_value=val,
             pos=Position(start_idx, self.idx, self.line, start_col),
         )
 
@@ -237,5 +237,5 @@ class Lexer:
         return Token(
             tok_type,
             pos=Position(start_idx, self.idx, self.line, start_col),
-            value=value if tok_type == TokenTypes.IDENTIFIER else None,
+            raw_value=value if tok_type == TokenTypes.IDENTIFIER else None,
         )

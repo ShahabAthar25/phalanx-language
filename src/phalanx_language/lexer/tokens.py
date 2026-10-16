@@ -84,7 +84,14 @@ class Position:
 class Token:
     type: TokenTypes
     pos: Position
-    value: Optional[Any] = None
+    raw_value: Optional[Any] = None
+
+    @property
+    def value(self):
+        if not self.raw_value:
+            raise RuntimeError(f"No value found in token {self.type}")
+
+        return self.raw_value
 
     def __repr__(self) -> str:
         if self.value is not None:
