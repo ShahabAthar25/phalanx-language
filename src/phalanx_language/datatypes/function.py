@@ -8,7 +8,7 @@ from phalanx_language.parser.ast.functions import FunctionParamsNode
 from phalanx_language.parser.ast.prefix import NullNode
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Function(Value):
     name: str
     params: List[FunctionParamsNode]

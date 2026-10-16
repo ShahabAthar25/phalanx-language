@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from phalanx_language.datatypes.base import Value
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Boolean(Value):
     value: bool
 
