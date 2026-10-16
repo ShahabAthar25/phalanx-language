@@ -25,12 +25,16 @@ class Interpreter:
         self,
         ast_list: Sequence[ASTNode],
         env_parent: Optional[Enviroment] = None,
+        env: Optional[Enviroment] = None,
         register: bool = True,
     ) -> Value:
         last_evaluated_value = Null()
-        env = Enviroment(parent=env_parent)
-        if register:
-            register_builtins(env)
+
+        if not env:
+            env = Enviroment(parent=env_parent)
+
+            if register:
+                register_builtins(env)
 
         for stmt in ast_list:
             last_evaluated_value = self.evaluate(stmt, env)
@@ -92,7 +96,9 @@ class Interpreter:
 
             # Functions
             case FunctionDeclerationNode(name, params, code_block):
-                return Function(name.value, params, code_block, env)
+                func = Function(name.value, params, code_block, env)
+                env.define_function(name.value, func)
+                return func
 
             case FunctionCallNode() as node:
                 return functions.evaluate(self, node, env)

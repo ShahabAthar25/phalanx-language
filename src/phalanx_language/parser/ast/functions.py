@@ -19,7 +19,7 @@ class FunctionParamsNode(ExpressionNode):
 class FunctionDeclerationNode(ExpressionNode):
     name: Token
     args: List[FunctionParamsNode]
-    code_block: List[ExpressionNode] | NullNode
+    code_block: List[ExpressionNode]
 
     def __repr__(self) -> str:
         return f"func {self.name} ({self.args}) {self.code_block}"
@@ -28,7 +28,7 @@ class FunctionDeclerationNode(ExpressionNode):
 @dataclass(frozen=True)
 class FunctionCallNode(ExpressionNode):
     name: Token
-    args: List[Token]
+    args: List[ExpressionNode]
 
     def __repr__(self) -> str:
         return f"func {self.name} ({self.args})"

@@ -23,12 +23,12 @@ def parse_grouping_paren(parser: Parser):
     return expr
 
 
-def parse_grouping_curly(parser: Parser) -> List[ExpressionNode] | NullNode:
+def parse_grouping_curly(parser: Parser) -> List[ExpressionNode]:
     parser.advance()
 
     # Empty code block should return nothing
     if parser.current_tok.type == TokenTypes.RCURLY:
-        return NullNode()
+        return []
 
     statements = []
     while (

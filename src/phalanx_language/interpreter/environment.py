@@ -1,4 +1,4 @@
-from typing import Dict, Optional, Type
+from typing import TYPE_CHECKING, Dict, Optional, Type
 
 from phalanx_language.datatypes.base import Value
 from phalanx_language.datatypes.bool import Boolean
@@ -7,6 +7,9 @@ from phalanx_language.datatypes.int import Integer
 from phalanx_language.datatypes.null import Null
 from phalanx_language.lexer.tokens import Token, TokenTypes
 from phalanx_language.parser.ast.variables import VariableAccessNode
+
+if TYPE_CHECKING:
+    from phalanx_language.datatypes.function import Function
 
 TYPE_REGISTRY: Dict[str, type] = {
     "int": Integer,
@@ -57,6 +60,13 @@ class Enviroment:
 
         self.values[name] = value
         self.types[name] = stored_type
+
+    def define_function(self, name: str, func_value: Function) -> None:
+        if self.get(name) is not None:
+            raise NameError(f"'{name}' is already defined.")
+
+        self.values[name] = func_value
+        self.types[name] = type(func_value)
 
     def assign(self, name: str, value: Value):
         if name in self.values:

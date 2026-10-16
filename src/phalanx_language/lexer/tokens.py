@@ -94,7 +94,7 @@ class Token:
         return self.raw_value
 
     def __repr__(self) -> str:
-        if self.value is not None:
+        if self.raw_value is not None:
             return f"{self.type}:{self.value}"
 
         return f"{self.type}"

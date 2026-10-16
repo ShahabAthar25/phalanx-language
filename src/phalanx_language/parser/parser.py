@@ -7,7 +7,7 @@ from phalanx_language.parser.rules import register_all_rules
 from phalanx_language.parser.types import InfixFn, PrefixFn
 
 # A reusable EOF sentinel token
-EOF_TOKEN = Token(TokenTypes.EOF, value=None, pos=Position(-1, -1, -1, -1))
+EOF_TOKEN = Token(TokenTypes.EOF, raw_value=None, pos=Position(-1, -1, -1, -1))
 
 
 class Parser:

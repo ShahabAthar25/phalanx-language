@@ -27,6 +27,8 @@ source = """
 func add(a::int, b::int) {
     a + b
 }
+
+add(10+10, 10)
 """
 run(source)
 # while True:
