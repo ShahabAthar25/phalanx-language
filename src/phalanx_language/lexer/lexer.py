@@ -110,6 +110,9 @@ class Lexer:
                     self.advance()
 
                 case "/":
+                    if self.idx + 1 < len(self.text) and self.text[self.idx + 1] == "/":
+                        return self.skip_comment()
+
                     yield Token(
                         TokenTypes.DIV,
                         Position(self.idx, self.idx + 1, self.line, self.col_idx),
@@ -239,3 +242,8 @@ class Lexer:
             pos=Position(start_idx, self.idx, self.line, start_col),
             raw_value=value if tok_type == TokenTypes.IDENTIFIER else None,
         )
+
+    def skip_comment(self):
+        # Consume characters until we hit a newline or EOF
+        while self.current_char is not None and self.current_char != "\n":
+            self.advance()
