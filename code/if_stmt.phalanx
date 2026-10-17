@@ -1,0 +1,40 @@
+func find_largest(a::int, b::int, c::int) {
+  let largest::int = a
+
+  if b > largest {
+    largest = b
+  }
+  
+  if c > largest {
+    largest = c
+  }
+
+  return largest
+}
+
+func find_largest_nested(a::int, b::int, c::int) {
+  if a > b {
+
+    if a > c {
+      return a
+    }
+
+    return c
+  }
+
+  if b > c {
+    return b
+  }
+
+  return c
+}
+
+func return_largest() {
+  return 3
+}
+
+find_largest(
+  find_largest(1,2,3),
+  find_largest_nested(3,4,3),
+  return_largest()
+)

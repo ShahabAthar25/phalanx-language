@@ -1,8 +1,8 @@
+import sys
+
 from phalanx_language.datatypes.null import Null
 from phalanx_language.interpreter.interpreter import Interpreter
 from phalanx_language.lexer.lexer import Lexer
-from phalanx_language.parser.ast import (ASTNode, BinaryOpNode,
-                                         IntegerLiteralNode, LiteralNode)
 from phalanx_language.parser.parser import Parser
 
 
@@ -23,14 +23,10 @@ def run(source: str) -> None:
         print(val)
 
 
-source = """
-func add(a::int, b::int) {
-    return a+b
-}
-
-add(10,10)
-"""
-run(source)
-# while True:
-#     source = input(">>> ")
-#     run(source)
+filename = sys.argv[1] if len(sys.argv) >= 2 else None
+if filename is not None:
+    with open(filename, "r") as file:
+        source = file.read()
+        run(source)
+else:
+    raise Exception("Only works with file right now")
