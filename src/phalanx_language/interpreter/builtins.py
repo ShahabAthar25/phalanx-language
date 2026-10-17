@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from phalanx_language.builtins.print import println
+from phalanx_language.builtins.print import builtin_println
 from phalanx_language.datatypes.bool import Boolean
 from phalanx_language.datatypes.builtinfunctions import BuiltInFunction
 from phalanx_language.datatypes.null import Null
@@ -18,4 +18,4 @@ def register_builtins(env: Enviroment):
     env.define("true", Boolean(True), "bool")
 
     # Builtin Functions
-    env.define_function("print", BuiltInFunction(println))
+    env.define_function("print", BuiltInFunction(builtin_println))
