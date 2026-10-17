@@ -3,7 +3,8 @@ from typing import TYPE_CHECKING, List
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast.base import ExpressionNode
 from phalanx_language.parser.ast.functions import (FunctionDeclerationNode,
-                                                   FunctionParamsNode)
+                                                   FunctionParamsNode,
+                                                   ReturnNode)
 from phalanx_language.parser.prefixs.grouping import parse_grouping_curly
 
 if TYPE_CHECKING:
@@ -37,3 +38,13 @@ def parse_func(parser: Parser):
     code_block = parse_grouping_curly(parser)
 
     return FunctionDeclerationNode(name, params, code_block)
+
+
+def parse_return(parser: Parser):
+    parser.advance()
+
+    expr = None
+    if parser.current_tok.type in parser.prefix_funcs.keys():
+        expr = parser.parse_expr()
+
+    return ReturnNode(expr)

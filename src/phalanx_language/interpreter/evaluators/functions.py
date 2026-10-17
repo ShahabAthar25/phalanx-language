@@ -1,7 +1,10 @@
 from typing import TYPE_CHECKING
 
+from polars.datatypes import Null
+
 from phalanx_language.datatypes.function import Function
 from phalanx_language.interpreter.environment import Enviroment
+from phalanx_language.interpreter.signals import ReturnSignal
 from phalanx_language.parser.ast.functions import FunctionCallNode
 from phalanx_language.parser.prefixs.grouping import parse_grouping_curly
 
@@ -25,4 +28,8 @@ def evaluate(interpreter: Interpreter, node: FunctionCallNode, env: Enviroment):
     for param, arg in zip(func_val.params, evaluated_args):
         closure_env.define(param.name.value, arg, param.var_type.value)
 
-    return interpreter.interpret(func_val.code_block, env=closure_env, register=False)
+    try:
+        interpreter.interpret(func_val.code_block, env=closure_env, register=False)
+        return Null()
+    except ReturnSignal as ret:
+        return ret.value

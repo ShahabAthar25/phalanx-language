@@ -32,3 +32,11 @@ class FunctionCallNode(ExpressionNode):
 
     def __repr__(self) -> str:
         return f"func {self.name} ({self.args})"
+
+
+@dataclass(frozen=True, slots=True)
+class ReturnNode(ExpressionNode):
+    expr: ExpressionNode | None
+
+    def __repr__(self) -> str:
+        return f"return {self.expr}"

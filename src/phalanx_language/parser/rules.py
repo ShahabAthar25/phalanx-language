@@ -4,7 +4,7 @@ from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.binding_power import BindingPower
 from phalanx_language.parser.infixs.binop import parse_binary_op
 from phalanx_language.parser.prefixs.control_flow import parse_if_stmt
-from phalanx_language.parser.prefixs.functions import parse_func
+from phalanx_language.parser.prefixs.functions import parse_func, parse_return
 from phalanx_language.parser.prefixs.grouping import (parse_grouping_curly,
                                                       parse_grouping_paren)
 from phalanx_language.parser.prefixs.identifiers import parse_identifier
@@ -46,6 +46,7 @@ def register_all_rules(parser: Parser):
 
     # Functions
     prefix(TokenTypes.FUNC, parse_func)
+    prefix(TokenTypes.RETURN, parse_return)
 
     # Logical
     prefix(TokenTypes.NOT, parse_unary)

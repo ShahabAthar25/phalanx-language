@@ -53,6 +53,7 @@ class TokenTypes(StrEnum):
 
     # Functions
     FUNC = auto()
+    RETURN = auto()
 
     # Identifiers
     IDENTIFIER = auto()
@@ -69,6 +70,7 @@ KEYWORDS = {
     "let": TokenTypes.LET,
     "if": TokenTypes.IF,
     "func": TokenTypes.FUNC,
+    "return": TokenTypes.RETURN,
 }
 
 

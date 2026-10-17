@@ -4,6 +4,7 @@ from phalanx_language.datatypes import Float, Integer, Value
 from phalanx_language.datatypes.function import Function
 from phalanx_language.datatypes.null import Null
 from phalanx_language.interpreter.environment import Enviroment
+from phalanx_language.interpreter.signals import ReturnSignal
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
                                          IntegerLiteralNode,
@@ -11,8 +12,10 @@ from phalanx_language.parser.ast import (BinaryOpNode, FloatLiteralNode,
 from phalanx_language.parser.ast.base import ASTNode, ExpressionNode
 from phalanx_language.parser.ast.control_flow import IfStmtNode
 from phalanx_language.parser.ast.functions import (FunctionCallNode,
-                                                   FunctionDeclerationNode)
-from phalanx_language.parser.ast.prefix import UnaryNode, VectorLiteralNode
+                                                   FunctionDeclerationNode,
+                                                   ReturnNode)
+from phalanx_language.parser.ast.prefix import (NullNode, UnaryNode,
+                                                VectorLiteralNode)
 from phalanx_language.parser.ast.variables import (VariableAccessNode,
                                                    VariableAssignNode)
 
@@ -105,6 +108,10 @@ class Interpreter:
 
             case FunctionCallNode() as node:
                 return functions.evaluate(self, node, env)
+
+            case ReturnNode(expr):
+                value = self.evaluate(expr, env) if expr is not None else Null()
+                raise ReturnSignal(value)
 
             # Control Flow
             case IfStmtNode() as node:
