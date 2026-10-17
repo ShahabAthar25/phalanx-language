@@ -24,11 +24,9 @@ def run(source: str) -> None:
 
 
 source = """
-func add(a::int, b::int) {
-    a + b
-}
-
-add(10+10, 10)
+let a::vector = [1,2,3]
+let b::vector = [1,2,3]
+a+b
 """
 run(source)
 # while True:

@@ -47,8 +47,8 @@ class NullNode(ExpressionNode):
 
 
 @dataclass(frozen=True)
-class ListLiteralNode(ExpressionNode):
-    items: List[ExpressionNode]
+class VectorLiteralNode(ExpressionNode):
+    exprs: List[ExpressionNode]
 
     def __repr__(self) -> str:
-        return f"{self.items}"
+        return f"{self.exprs}"

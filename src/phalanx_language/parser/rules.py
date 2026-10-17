@@ -8,11 +8,11 @@ from phalanx_language.parser.prefixs.functions import parse_func
 from phalanx_language.parser.prefixs.grouping import (parse_grouping_curly,
                                                       parse_grouping_paren)
 from phalanx_language.parser.prefixs.identifiers import parse_identifier
-from phalanx_language.parser.prefixs.lists import parse_lists
 from phalanx_language.parser.prefixs.literals import parse_float, parse_int
 from phalanx_language.parser.prefixs.unary import parse_unary
 from phalanx_language.parser.prefixs.variables import \
     parse_variable_declaration
+from phalanx_language.parser.prefixs.vectors import parse_vector
 from phalanx_language.parser.types import InfixFn, PrefixFn
 
 if TYPE_CHECKING:
@@ -34,7 +34,7 @@ def register_all_rules(parser: Parser):
     # Literals
     prefix(TokenTypes.INT, parse_int)
     prefix(TokenTypes.FLOAT, parse_float)
-    prefix(TokenTypes.LBRACKET, parse_lists)
+    prefix(TokenTypes.LBRACKET, parse_vector)
 
     # Unary
     prefix(TokenTypes.MINUS, parse_unary)

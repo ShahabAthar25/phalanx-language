@@ -2,19 +2,19 @@ from typing import TYPE_CHECKING, List
 
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast.base import ExpressionNode
-from phalanx_language.parser.ast.prefix import ListLiteralNode
+from phalanx_language.parser.ast.prefix import VectorLiteralNode
 
 if TYPE_CHECKING:
     from phalanx_language.parser.parser import Parser
 
 
-def parse_lists(parser: Parser):
+def parse_vector(parser: Parser):
     parser.advance()
 
     # Empty List
     if parser.current_tok.type == TokenTypes.RBRACKET:
         parser.advance()  # Consume ']'
-        return ListLiteralNode([])
+        return VectorLiteralNode([])
 
     expr_list: List[ExpressionNode] = []
     while True:
@@ -33,4 +33,4 @@ def parse_lists(parser: Parser):
             case _:
                 raise SyntaxError("Expected ']'")
 
-    return ListLiteralNode(items=expr_list)
+    return VectorLiteralNode(exprs=expr_list)

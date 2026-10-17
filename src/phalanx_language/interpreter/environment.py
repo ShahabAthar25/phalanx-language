@@ -5,6 +5,7 @@ from phalanx_language.datatypes.bool import Boolean
 from phalanx_language.datatypes.float import Float
 from phalanx_language.datatypes.int import Integer
 from phalanx_language.datatypes.null import Null
+from phalanx_language.datatypes.vector import Vector
 from phalanx_language.lexer.tokens import Token, TokenTypes
 from phalanx_language.parser.ast.variables import VariableAccessNode
 
@@ -16,6 +17,7 @@ TYPE_REGISTRY: Dict[str, type] = {
     "float": Float,
     "bool": Boolean,
     "null": Null,
+    "vector": Vector,
 }
 
 

@@ -12,12 +12,13 @@ from phalanx_language.parser.ast.base import ASTNode, ExpressionNode
 from phalanx_language.parser.ast.control_flow import IfStmtNode
 from phalanx_language.parser.ast.functions import (FunctionCallNode,
                                                    FunctionDeclerationNode)
-from phalanx_language.parser.ast.prefix import UnaryNode
+from phalanx_language.parser.ast.prefix import UnaryNode, VectorLiteralNode
 from phalanx_language.parser.ast.variables import (VariableAccessNode,
                                                    VariableAssignNode)
 
 from .builtins import register_builtins
-from .evaluators import arithmatic, control_flow, functions, logicals, unary
+from .evaluators import (arithmatic, control_flow, functions, logicals, unary,
+                         vectors)
 
 
 class Interpreter:
@@ -48,8 +49,10 @@ class Interpreter:
                 return Integer(value=val)
             case FloatLiteralNode(value=val):
                 return Float(value=val)
-            case UnaryNode() as expr:
-                return unary.evaluate(self, expr, env)
+            case UnaryNode() as node:
+                return unary.evaluate(self, node, env)
+            case VectorLiteralNode() as node:
+                return vectors.evaluate(self, node, env)
 
             # Binary Operation
             case BinaryOpNode() as expr:
