@@ -1,7 +1,7 @@
-from phalanx_language.datatypes.null import Null
+from phalanx_language.datatypes.strings import String
 
 
 def builtin_input(args):
     val = input(args)
 
-    return val
+    return String(val)

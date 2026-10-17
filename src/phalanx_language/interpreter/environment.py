@@ -5,6 +5,7 @@ from phalanx_language.datatypes.bool import Boolean
 from phalanx_language.datatypes.float import Float
 from phalanx_language.datatypes.int import Integer
 from phalanx_language.datatypes.null import Null
+from phalanx_language.datatypes.strings import String
 from phalanx_language.datatypes.vector import Vector
 from phalanx_language.lexer.tokens import Token, TokenTypes
 from phalanx_language.parser.ast.variables import VariableAccessNode
@@ -19,6 +20,7 @@ TYPE_REGISTRY: Dict[str, type] = {
     "bool": Boolean,
     "null": Null,
     "vector": Vector,
+    "string": String,
 }
 
 
@@ -65,7 +67,7 @@ class Enviroment:
         self.types[name] = stored_type
 
     def define_function(
-        self, name: str, func_value: Function | BuiltInFunctions
+        self, name: str, func_value: Function | BuiltInFunction
     ) -> None:
         if self.get(name) is not None:
             raise NameError(f"'{name}' is already defined.")

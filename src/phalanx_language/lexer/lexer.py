@@ -42,8 +42,10 @@ class Lexer:
                     self.advance()
 
                 case "\n":
-                    # Moved logic to advance as is more useful but still kept if statement as
-                    # might need it for making language multiline
+                    # Ignore newlines to support implicit line continuation.
+                    # This allows expressions like binary operations to span multiple lines:
+                    #   let x::int = a
+                    #              + b
                     self.advance()
 
                 case "(":
@@ -156,6 +158,9 @@ class Lexer:
                 case char if char.isalpha():
                     yield self.make_identifier_or_keyword()
 
+                case "'" | '"':
+                    yield self.make_string(self.current_char)
+
                 case _:
                     raise SyntaxError(
                         f"Unexpected character: '{self.current_char}' at line {self.line}, col {self.col_idx}"
@@ -243,7 +248,30 @@ class Lexer:
             raw_value=value if tok_type == TokenTypes.IDENTIFIER else None,
         )
 
+    def make_string(self, closing_char: str):
+        start_idx = self.idx
+        start_col = self.col_idx
+        value = ""
+
+        self.advance()  # Advance opening quote
+
+        while self.current_char and self.current_char != closing_char:
+            value += self.current_char
+            self.advance()
+
+        if self.current_char != closing_char:
+            raise SyntaxError("Unterminated string")
+
+        self.advance()  # Advance ending quote
+
+        tok = Token(
+            TokenTypes.STRING,
+            Position(start_idx, self.idx, self.line, start_col),
+            raw_value=value,
+        )
+        return tok
+
     def skip_comment(self):
         # Consume characters until we hit a newline or EOF
-        while self.current_char is not None and self.current_char != "\n":
+        while self.current_char and self.current_char != "\n":
             self.advance()

@@ -18,6 +18,7 @@ class TokenTypes(StrEnum):
     # Literals
     INT = auto()
     FLOAT = auto()
+    STRING = auto()
 
     # Arithmatic
     PLUS = auto()

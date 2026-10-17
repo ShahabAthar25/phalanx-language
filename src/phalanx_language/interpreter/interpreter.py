@@ -3,6 +3,7 @@ from typing import List, Optional, Sequence
 from phalanx_language.datatypes import Float, Integer, Value
 from phalanx_language.datatypes.function import Function
 from phalanx_language.datatypes.null import Null
+from phalanx_language.datatypes.strings import String
 from phalanx_language.interpreter.environment import Enviroment
 from phalanx_language.interpreter.signals import ReturnSignal
 from phalanx_language.lexer.tokens import TokenTypes
@@ -14,8 +15,8 @@ from phalanx_language.parser.ast.control_flow import IfStmtNode
 from phalanx_language.parser.ast.functions import (FunctionCallNode,
                                                    FunctionDeclerationNode,
                                                    ReturnNode)
-from phalanx_language.parser.ast.prefix import (NullNode, UnaryNode,
-                                                VectorLiteralNode)
+from phalanx_language.parser.ast.prefix import (NullNode, StringLiteralNode,
+                                                UnaryNode, VectorLiteralNode)
 from phalanx_language.parser.ast.variables import (VariableAccessNode,
                                                    VariableAssignNode)
 
@@ -52,6 +53,8 @@ class Interpreter:
                 return Integer(value=val)
             case FloatLiteralNode(value=val):
                 return Float(value=val)
+            case StringLiteralNode(value=val):
+                return String(value=val)
             case UnaryNode() as node:
                 return unary.evaluate(self, node, env)
             case VectorLiteralNode() as node:

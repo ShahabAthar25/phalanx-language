@@ -31,6 +31,18 @@ class FloatLiteralNode(LiteralNode):
 
 
 @dataclass(frozen=True)
+class StringLiteralNode(LiteralNode):
+    """Represents strings literals (e.g., 'Hello World')."""
+
+    @property
+    def value(self) -> float:
+        return super().value
+
+    def __repr__(self) -> str:
+        return f'"{self.value}"'
+
+
+@dataclass(frozen=True)
 class UnaryNode(ExpressionNode):
     operator: Token
     expr: ExpressionNode
