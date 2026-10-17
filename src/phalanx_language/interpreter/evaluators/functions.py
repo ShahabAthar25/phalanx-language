@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING
 
 from polars.datatypes import Null
 
+from phalanx_language.datatypes.builtinfunctions import BuiltInFunction
 from phalanx_language.datatypes.function import Function
 from phalanx_language.interpreter.environment import Enviroment
 from phalanx_language.interpreter.signals import ReturnSignal
@@ -15,13 +16,19 @@ if TYPE_CHECKING:
 def evaluate(interpreter: Interpreter, node: FunctionCallNode, env: Enviroment):
     func_val = env.retrieve(node.name.value)
 
+    evaluated_args = [interpreter.evaluate(arg, env) for arg in node.args]
+
+    if isinstance(func_val, BuiltInFunction):
+        return func_val.call(evaluated_args)
+
     if not isinstance(func_val, Function):
         raise TypeError(f"{node.name} is not callable")
 
-    evaluated_args = [interpreter.evaluate(arg, env) for arg in node.args]
-
     if len(func_val.params) != len(evaluated_args):
-        raise RuntimeError(f"Function {node.name} expects {len(evaluated_args)}")
+        raise RuntimeError(
+            f"Function '{node.name.value}' expects {len(func_val.params)} arguments, "
+            f"but got {len(evaluated_args)}"
+        )
 
     closure_env = Enviroment(parent=env)
 

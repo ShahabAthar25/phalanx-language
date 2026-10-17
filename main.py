@@ -17,10 +17,7 @@ def run(source: str) -> None:
 
     interpreter = Interpreter()
 
-    val = interpreter.interpret(ast_list)
-
-    if not isinstance(val, Null):
-        print(val)
+    interpreter.interpret(ast_list)
 
 
 filename = sys.argv[1] if len(sys.argv) >= 2 else None

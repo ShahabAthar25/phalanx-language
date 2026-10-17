@@ -10,6 +10,7 @@ from phalanx_language.lexer.tokens import Token, TokenTypes
 from phalanx_language.parser.ast.variables import VariableAccessNode
 
 if TYPE_CHECKING:
+    from phalanx_language.datatypes.builtinfunctions import BuiltInFunction
     from phalanx_language.datatypes.function import Function
 
 TYPE_REGISTRY: Dict[str, type] = {
@@ -63,7 +64,9 @@ class Enviroment:
         self.values[name] = value
         self.types[name] = stored_type
 
-    def define_function(self, name: str, func_value: Function) -> None:
+    def define_function(
+        self, name: str, func_value: Function | BuiltInFunctions
+    ) -> None:
         if self.get(name) is not None:
             raise NameError(f"'{name}' is already defined.")
 
