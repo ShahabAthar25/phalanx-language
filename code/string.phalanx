@@ -1,2 +1,5 @@
 let b::string = "Hello World"
 print(b)
+
+let c::string = (b + " ") * 3
+print(c)
