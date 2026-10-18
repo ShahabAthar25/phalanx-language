@@ -1,0 +1,33 @@
+// =====================================================================
+// Phalanx Quantitative DSL - Vector Processing Engine
+// Strategy: Statistical Arbitrage Spread & Return Analysis
+// =====================================================================
+
+// Define historical price vectors for a cointegrated asset pair
+let prices_a::vector = [100.5, 101.2, 102.0, 101.8, 103.5, 104.2]
+let prices_b::vector = [50.0,  50.5,  51.0,  50.8,  51.5,  52.0]
+
+// Function to calculate the trading spread between two assets
+// Demonstrates vector arithmetic and scalar scaling
+func calculate_spread(a::vector, b::vector, hedge_ratio::float) {
+    let scaled_b::vector = b * hedge_ratio
+    let spread::vector = a - scaled_b
+    return spread
+}
+
+// Function to log formatted execution steps
+func log_pipeline_status(status_msg::string) {
+    print("--------------------------------------------------")
+    print("STATUS: " + status_msg)
+}
+
+// --- Main Execution Pipeline ---
+
+// Set the hedge ratio derived from regression analysis
+let beta::float = 2.0
+
+// Compute the spread vector
+let spread_results::vector = calculate_spread(prices_a, prices_b, beta)
+
+print("Computed Pairwise Spread Stream:")
+print(spread_results)

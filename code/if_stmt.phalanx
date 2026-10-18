@@ -33,8 +33,10 @@ func return_largest() {
   return 3
 }
 
-find_largest(
+let largest::int = find_largest(
   find_largest(1,2,3),
   find_largest_nested(3,4,3),
   return_largest()
 )
+
+print(largest)

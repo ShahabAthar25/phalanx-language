@@ -113,7 +113,8 @@ class Lexer:
 
                 case "/":
                     if self.idx + 1 < len(self.text) and self.text[self.idx + 1] == "/":
-                        return self.skip_comment()
+                        self.skip_comment()
+                        continue
 
                     yield Token(
                         TokenTypes.DIV,
