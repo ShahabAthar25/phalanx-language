@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING
 
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast.base import ExpressionNode
+from phalanx_language.parser.ast.dot import DotNode
 from phalanx_language.parser.ast.functions import FunctionCallNode
 from phalanx_language.parser.ast.variables import (VariableAccessNode,
                                                    VariableAssignNode)
@@ -21,7 +22,7 @@ def parse_identifier(parser: Parser) -> ExpressionNode:
 
         expr = parser.parse_expr()
 
-        return VariableAssignNode(tok, expr)
+        node = VariableAssignNode(tok, expr)
 
     elif parser.current_tok.type == TokenTypes.LPAREN:
         parser.advance()
@@ -39,6 +40,19 @@ def parse_identifier(parser: Parser) -> ExpressionNode:
 
         parser.advance()
 
-        return FunctionCallNode(tok, args)
+        node = FunctionCallNode(tok, args)
 
-    return VariableAccessNode(tok)
+    else:
+        node = VariableAccessNode(tok)
+
+    # Dot notation parsing
+    while parser.current_tok.type == TokenTypes.DOT:
+        parser.advance()
+
+        attr_tok = parser.consume(
+            TokenTypes.IDENTIFIER, "Expected identifier after dot '.'"
+        )
+
+        node = DotNode(node, attr_tok)
+
+    return node

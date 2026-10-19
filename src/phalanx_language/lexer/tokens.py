@@ -43,6 +43,9 @@ class TokenTypes(StrEnum):
     OR = auto()
     AND = auto()
 
+    # Dot notation
+    DOT = auto()
+
     # Variables
     LET = auto()
 
