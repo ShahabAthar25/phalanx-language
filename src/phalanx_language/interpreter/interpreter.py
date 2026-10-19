@@ -104,9 +104,9 @@ class Interpreter:
                 return var
 
             # Functions
-            case FunctionDeclerationNode(name, params, code_block):
-                func = Function(name.value, params, code_block, env)
-                env.define_function(name.value, func)
+            case FunctionDeclerationNode(name, params, return_type, code_block):
+                func = Function(name.value, params, return_type.value, code_block, env)
+                env.define_function(name.value, func, return_type.value)
                 return func
 
             case FunctionCallNode() as node:

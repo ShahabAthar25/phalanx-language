@@ -39,4 +39,9 @@ def evaluate(interpreter: Interpreter, node: FunctionCallNode, env: Enviroment):
         interpreter.interpret(func_val.code_block, env=closure_env, register=False)
         return Null()
     except ReturnSignal as ret:
+        expected_type = env.types[node.name.value]
+        if type(ret.value) != expected_type:
+            raise TypeError(
+                f"Expected {expected_type.__name__} but got {type(ret.value).__name__} in function {func_val.name}"
+            )
         return ret.value

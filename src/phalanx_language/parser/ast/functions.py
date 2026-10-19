@@ -19,6 +19,7 @@ class FunctionParamsNode(ExpressionNode):
 class FunctionDeclerationNode(ExpressionNode):
     name: Token
     args: List[FunctionParamsNode]
+    return_type: Token
     code_block: List[ExpressionNode]
 
     def __repr__(self) -> str:

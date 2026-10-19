@@ -40,6 +40,12 @@ class Enviroment:
 
             expected_type = TYPE_REGISTRY[var_type]
 
+        elif isinstance(var_type, str):
+            if var_type not in TYPE_REGISTRY:
+                raise TypeError(f"TypeError: Unknown type '{var_type}'")
+
+            expected_type = TYPE_REGISTRY[var_type]
+
         elif isinstance(var_type, type):
             expected_type = var_type
 
@@ -67,13 +73,19 @@ class Enviroment:
         self.types[name] = stored_type
 
     def define_function(
-        self, name: str, func_value: Function | BuiltInFunction
+        self, name: str, func_value: Function | BuiltInFunction, return_type: str
     ) -> None:
         if self.get(name) is not None:
             raise NameError(f"'{name}' is already defined.")
 
         self.values[name] = func_value
-        self.types[name] = type(func_value)
+
+        ret_type = TYPE_REGISTRY.get(return_type, None)
+
+        if ret_type is None:
+            raise SyntaxError("Invalid return type")
+
+        self.types[name] = ret_type
 
     def assign(self, name: str, value: Value):
         if name in self.values:

@@ -98,11 +98,9 @@ class Lexer:
                     self.advance()
 
                 case "-":
-                    yield Token(
-                        TokenTypes.MINUS,
-                        Position(self.idx, self.idx + 1, self.line, self.col_idx),
+                    yield self.make_compount_token(
+                        TokenTypes.ARROW, TokenTypes.MINUS, next_char=">"
                     )
-                    self.advance()
 
                 case "*":
                     yield Token(

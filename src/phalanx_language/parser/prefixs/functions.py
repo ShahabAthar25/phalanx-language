@@ -35,9 +35,15 @@ def parse_func(parser: Parser):
 
     parser.advance()
 
+    parser.consume(TokenTypes.ARROW, "Expected '->' to get return type of function")
+
+    return_type = parser.consume(
+        TokenTypes.IDENTIFIER, "Expected return type of function"
+    )
+
     code_block = parse_grouping_curly(parser)
 
-    return FunctionDeclerationNode(name, params, code_block)
+    return FunctionDeclerationNode(name, params, return_type, code_block)
 
 
 def parse_return(parser: Parser):

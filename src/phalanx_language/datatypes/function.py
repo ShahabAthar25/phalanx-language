@@ -12,6 +12,7 @@ from phalanx_language.parser.ast.prefix import NullNode
 class Function(Value):
     name: str
     params: List[FunctionParamsNode]
+    return_type: str
     code_block: List[ExpressionNode]
     closure_env: Enviroment
 

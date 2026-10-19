@@ -55,6 +55,7 @@ class TokenTypes(StrEnum):
     # Functions
     FUNC = auto()
     RETURN = auto()
+    ARROW = auto()
 
     # Identifiers
     IDENTIFIER = auto()
@@ -70,7 +71,7 @@ KEYWORDS = {
     "and": TokenTypes.AND,
     "let": TokenTypes.LET,
     "if": TokenTypes.IF,
-    "func": TokenTypes.FUNC,
+    "fn": TokenTypes.FUNC,
     "return": TokenTypes.RETURN,
 }
 
