@@ -1,0 +1,3 @@
+let luck::asset = load_data("LUCK", "data/LUCK.csv")
+
+print(luck)

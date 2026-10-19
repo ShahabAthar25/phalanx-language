@@ -23,5 +23,5 @@ def register_builtins(env: Enviroment):
     env.define_function("print", BuiltInFunction(builtin_println), "null")
     env.define_function("input", BuiltInFunction(builtin_input), "string")
     env.define_function(
-        "load_data", BuiltInFunction(builtin_load_data), "vector"
+        "load_data", BuiltInFunction(builtin_load_data), "asset"
     )  # Vector for testing only will return asset

@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING, Dict, Optional, Type
 
+from phalanx_language.datatypes.asset import Asset
 from phalanx_language.datatypes.base import Value
 from phalanx_language.datatypes.bool import Boolean
 from phalanx_language.datatypes.float import Float
@@ -19,8 +20,9 @@ TYPE_REGISTRY: Dict[str, type] = {
     "float": Float,
     "bool": Boolean,
     "null": Null,
-    "vector": Vector,
     "string": String,
+    "vector": Vector,
+    "asset": Asset,
 }
 
 
