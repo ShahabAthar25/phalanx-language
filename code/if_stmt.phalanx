@@ -1,4 +1,4 @@
-func find_largest(a::int, b::int, c::int) {
+fn find_largest(a::int, b::int, c::int) {
   let largest::int = a
 
   if b > largest {
@@ -12,7 +12,7 @@ func find_largest(a::int, b::int, c::int) {
   return largest
 }
 
-func find_largest_nested(a::int, b::int, c::int) {
+fn find_largest_nested(a::int, b::int, c::int) {
   if a > b {
 
     if a > c {
@@ -29,7 +29,7 @@ func find_largest_nested(a::int, b::int, c::int) {
   return c
 }
 
-func return_largest() {
+fn return_largest() {
   return 3
 }
 
