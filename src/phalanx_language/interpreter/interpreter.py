@@ -16,6 +16,7 @@ from phalanx_language.parser.ast.dot import DotNode
 from phalanx_language.parser.ast.functions import (FunctionCallNode,
                                                    FunctionDeclerationNode,
                                                    ReturnNode)
+from phalanx_language.parser.ast.match import MatchNode
 from phalanx_language.parser.ast.prefix import (NullNode, StringLiteralNode,
                                                 UnaryNode, VectorLiteralNode)
 from phalanx_language.parser.ast.variables import (VariableAccessNode,
@@ -23,7 +24,7 @@ from phalanx_language.parser.ast.variables import (VariableAccessNode,
 
 from .builtins import register_builtins
 from .evaluators import (arithmatic, control_flow, dot, functions, logicals,
-                         unary, vectors)
+                         match, unary, vectors)
 
 
 class Interpreter:
@@ -124,6 +125,10 @@ class Interpreter:
             # Control Flow
             case IfStmtNode() as node:
                 return control_flow.evaluate_if_stmt(self, node, env)
+
+            # Match
+            case MatchNode() as node:
+                return match.evaluate(self, node, env)
 
             case _:
                 raise RuntimeError(f"Exexpected ast node: {node}")
