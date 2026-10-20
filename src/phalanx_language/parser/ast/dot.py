@@ -5,7 +5,7 @@ from phalanx_language.parser.ast.base import ExpressionNode
 
 
 @dataclass(frozen=True, slots=True)
-class DotNode:
+class DotNode(ExpressionNode):
     left: ExpressionNode
     attr: Token
 
