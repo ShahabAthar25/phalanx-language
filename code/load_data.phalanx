@@ -1,13 +1,9 @@
-// ==========================================
-// Phalanx Quantitative Strategy Pipeline
-// ==========================================
-
 // Data Ingestion
 let luck::asset = load_data("LUCK", "data/LUCK.csv")
 
 print("Successfully loaded asset:")
 print(luck)
 
-// Calculate daily high-low range percentage relative to the open
 let intraday_range::vector = ((luck.high - luck.low) / luck.open) * 100
-print(intraday_range)
+
+print(intraday_range > 2)

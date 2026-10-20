@@ -1,6 +1,9 @@
 from typing import TYPE_CHECKING
 
+import polars as pl
+
 from phalanx_language.datatypes.bool import Boolean
+from phalanx_language.datatypes.vector import Vector
 from phalanx_language.interpreter.environment import Enviroment
 from phalanx_language.lexer.tokens import TokenTypes
 from phalanx_language.parser.ast.infix import BinaryOpNode
@@ -15,25 +18,30 @@ def evaluate_comparison(interpreter: Interpreter, node: BinaryOpNode, env):
 
     match node.operator.type:
         case TokenTypes.EQ:
-            return Boolean(left.value == right.value)
+            result = left.value == right.value
 
         case TokenTypes.NEQ:
-            return Boolean(left.value != right.value)
+            result = left.value != right.value
 
         case TokenTypes.GT:
-            return Boolean(left.value > right.value)
+            result = left.value > right.value
 
         case TokenTypes.GTE:
-            return Boolean(left.value >= right.value)
+            result = left.value >= right.value
 
         case TokenTypes.LT:
-            return Boolean(left.value < right.value)
+            result = left.value < right.value
 
         case TokenTypes.LTE:
-            return Boolean(left.value <= right.value)
+            result = left.value <= right.value
 
         case _:
             raise RuntimeError(f"Unexpected logical operator: {node.operator}")
+
+    if isinstance(result, pl.Series):
+        return Vector(result)
+
+    return Boolean(result)
 
 
 def evaluate_logical(interpreter: Interpreter, node: BinaryOpNode, env: Enviroment):
