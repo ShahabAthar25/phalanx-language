@@ -10,6 +10,7 @@ from phalanx_language.parser.prefixs.grouping import (parse_grouping_curly,
 from phalanx_language.parser.prefixs.identifiers import parse_identifier
 from phalanx_language.parser.prefixs.literals import (parse_float, parse_int,
                                                       parse_string)
+from phalanx_language.parser.prefixs.match import parse_match
 from phalanx_language.parser.prefixs.unary import parse_unary
 from phalanx_language.parser.prefixs.variables import \
     parse_variable_declaration
@@ -50,6 +51,9 @@ def register_all_rules(parser: Parser):
     # Functions
     prefix(TokenTypes.FUNC, parse_func)
     prefix(TokenTypes.RETURN, parse_return)
+
+    # Match
+    prefix(TokenTypes.MATCH, parse_match)
 
     # Logical
     prefix(TokenTypes.NOT, parse_unary)

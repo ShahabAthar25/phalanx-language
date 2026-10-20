@@ -1,1 +1,11 @@
-match =>
+let luck::asset = load_data("LUCK", "data/LUCK.csv")
+
+let intraday_range::vector = ((luck.high - luck.low) / luck.open) * 100
+
+let regime::vector = match {
+    intraday_range > 2 => "high_vol"
+    intraday_range > 1 => "mid_vol"
+    intraday_range < 1 => "low_vol"
+}
+
+print(regime)
