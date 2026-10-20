@@ -14,11 +14,10 @@ def run(source: str) -> None:
     parser = Parser(tokens)
 
     ast_list = parser.parse()
-    print(ast_list)
 
-    # interpreter = Interpreter()
-    #
-    # interpreter.interpret(ast_list)
+    interpreter = Interpreter()
+
+    interpreter.interpret(ast_list)
 
 
 filename = sys.argv[1] if len(sys.argv) >= 2 else None

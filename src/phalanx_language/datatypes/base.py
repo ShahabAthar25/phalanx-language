@@ -23,6 +23,11 @@ class Value(ABC):
         """Human-readable type string for runtime errors (e.g. 'integer', 'string')."""
         pass
 
+    def get_attribute(self, attr: str):
+        raise TypeError(
+            f"Property accessor for attribute {attr} not supported on this data type {self.type_name}"
+        )
+
     @abstractmethod
     def __str__(self) -> str:
         """Printable representation."""
