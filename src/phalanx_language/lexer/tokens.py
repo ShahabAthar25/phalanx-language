@@ -67,6 +67,10 @@ class TokenTypes(StrEnum):
     COLON = auto()
     COMMA = auto()
 
+    # Match Statements
+    MATCH = auto()
+    FAT_ARROW = auto()
+
 
 KEYWORDS = {
     "not": TokenTypes.NOT,
@@ -76,6 +80,7 @@ KEYWORDS = {
     "if": TokenTypes.IF,
     "fn": TokenTypes.FUNC,
     "return": TokenTypes.RETURN,
+    "match": TokenTypes.MATCH,
 }
 
 

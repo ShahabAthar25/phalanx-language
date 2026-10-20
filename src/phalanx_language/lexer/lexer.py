@@ -147,7 +147,7 @@ class Lexer:
                     )
 
                 case "=":
-                    yield self.make_compount_token(TokenTypes.EQ, TokenTypes.ASSIGN)
+                    yield self.make_equals()
 
                 case "!":
                     yield self.make_neq()
@@ -175,6 +175,25 @@ class Lexer:
         yield Token(
             TokenTypes.EOF, Position(self.idx, self.idx, self.line, self.col_idx)
         )
+
+    def make_equals(self):
+        start_idx = self.idx
+        start_col = self.col_idx
+
+        self.advance()
+
+        if self.current_char == "=":
+            tok_type = TokenTypes.EQ
+            self.advance()
+
+        elif self.current_char == ">":
+            tok_type = TokenTypes.FAT_ARROW
+            self.advance()
+
+        else:
+            tok_type = TokenTypes.ASSIGN
+
+        return Token(tok_type, pos=Position(start_idx, self.idx, self.line, start_col))
 
     def make_compount_token(
         self, tok_type_1: TokenTypes, tok_type_2: TokenTypes, next_char: str = "="
