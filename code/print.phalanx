@@ -4,7 +4,7 @@ let b::string = "Hello, World!"
 a.print("<- This one is 'a'")
 b.print("<- This is a string")
 
-print()
+print() // Prints new line
 
 print("I like the above syntax more!")
 print("This is possible due to UFCS")
