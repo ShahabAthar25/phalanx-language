@@ -1,0 +1,5 @@
+let luck::asset = load_data("LUCK", "data/LUCK.csv")
+let sma_3::vector = (luck.close + luck.close.shift(1) + luck.close.shift(2) +
+                     luck.close.shift(3)) / 4
+
+print(sma_3, luck.close)
