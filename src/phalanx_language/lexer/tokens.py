@@ -100,7 +100,7 @@ class Token:
 
     @property
     def value(self):
-        if not self.raw_value:
+        if self.raw_value is None:
             raise RuntimeError(f"No value found in token {self.type}")
 
         return self.raw_value
